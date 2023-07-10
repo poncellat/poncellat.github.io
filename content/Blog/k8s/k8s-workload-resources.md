@@ -4,7 +4,6 @@ Modified: 2022-07-10 17:42
 Tags: k8s
 Keywords: k8s
 Authors: Hephzibah Pon Cellat Arulprakash
-Summary: K8S Workload Resources
 
 * Pods
 * Deployments

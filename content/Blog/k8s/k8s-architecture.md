@@ -4,7 +4,6 @@ Modified: 2022-07-10 17:09
 Tags: k8s
 Keywords: k8s, architecture, kubernetes
 Authors: Hephzibah Pon Cellat Arulprakash
-Summary: K8S components in master and worker nodes
 
 A kubernetes cluster is made up of one or more control plane and worker nodes.
 

@@ -1,2 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>A Pelican Blog - Hephzibah Pon Cellat Arulprakash</title><link>/</link><description></description><lastBuildDate>Sun, 10 Jul 2022 17:42:00 +0000</lastBuildDate><item><title>Kubernetes Workload Objects</title><link>/kubernetes-workload-objects.html</link><description>&lt;p&gt;K8S Workload Resources&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Hephzibah Pon Cellat Arulprakash</dc:creator><pubDate>Sun, 22 May 2022 21:36:00 +0000</pubDate><guid isPermaLink="false">tag:None,2022-05-22:/kubernetes-workload-objects.html</guid><category>k8s</category><category>k8s</category></item><item><title>Kubernetes Architecture</title><link>/kubernetes-architecture.html</link><description>&lt;p&gt;K8S components in master and worker nodes&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Hephzibah Pon Cellat Arulprakash</dc:creator><pubDate>Sat, 21 May 2022 21:36:00 +0000</pubDate><guid isPermaLink="false">tag:None,2022-05-21:/kubernetes-architecture.html</guid><category>k8s</category><category>k8s</category></item></channel></rss>
+<rss version="2.0"><channel><title>A Pelican Blog - Hephzibah Pon Cellat Arulprakash</title><link>/</link><description></description><lastBuildDate>Sun, 10 Jul 2022 17:42:00 +0000</lastBuildDate><item><title>Kubernetes Workload Objects</title><link>/kubernetes-workload-objects.html</link><description>&lt;ul&gt;
+&lt;li&gt;Pods&lt;/li&gt;
+&lt;li&gt;Deployments&lt;/li&gt;
+&lt;li&gt;ReplicaSet&lt;/li&gt;
+&lt;li&gt;StatefulSets&lt;/li&gt;
+&lt;li&gt;DaemonSet&lt;/li&gt;
+&lt;li&gt;Jobs&lt;/li&gt;
+&lt;li&gt;CronJob&lt;/li&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Hephzibah Pon Cellat Arulprakash</dc:creator><pubDate>Sun, 22 May 2022 21:36:00 +0000</pubDate><guid isPermaLink="false">tag:None,2022-05-22:/kubernetes-workload-objects.html</guid><category>k8s</category><category>k8s</category></item><item><title>Kubernetes Architecture</title><link>/kubernetes-architecture.html</link><description>&lt;p&gt;A kubernetes cluster is made up of one or more control plane and worker nodes.&lt;/p&gt;
+&lt;h2&gt;Control Plane&lt;/h2&gt;
+&lt;p&gt;Components of control plane are,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;kube-apiserver&lt;/li&gt;
+&lt;li&gt;etcd&lt;/li&gt;
+&lt;li&gt;controller manager&lt;/li&gt;
+&lt;li&gt;kube-scheduler&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Worker Nodes&lt;/h2&gt;
+&lt;p&gt;Components of a worker node are,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;kubelet&lt;/li&gt;
+&lt;li&gt;kube proxy&lt;/li&gt;
+&lt;li&gt;container runtime&lt;/li&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Hephzibah Pon Cellat Arulprakash</dc:creator><pubDate>Sat, 21 May 2022 21:36:00 +0000</pubDate><guid isPermaLink="false">tag:None,2022-05-21:/kubernetes-architecture.html</guid><category>k8s</category><category>k8s</category></item></channel></rss>
