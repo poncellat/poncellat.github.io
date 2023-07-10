@@ -4,9 +4,10 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="generator" content="Pelican" />
-        <title>A Pelican Blog - Hephzibah Pon Cellat Arulprakash</title>
+        <title>Troubleshoot high latency database</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
         <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="A Pelican Blog Atom Feed" />
+        <meta name="description" content="Problem Statement How would you troubleshoot a high latency database application, consider a user is experiencing delays per hits to an..." />
 </head>
 
 <body id="index" class="home">
@@ -15,13 +16,18 @@
                 <nav><ul>
                     <li><a href="/category/about.html">About</a></li>
                     <li><a href="/category/k8s.html">k8s</a></li>
-                    <li><a href="/category/troubleshooting.html">troubleshooting</a></li>
+                    <li class="active"><a href="/category/troubleshooting.html">troubleshooting</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/troubleshoot-high-latency-database.html" rel="bookmark"
+           title="Permalink to Troubleshoot high latency database">Troubleshoot high latency database</a></h1>
+    </header>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="/troubleshoot-high-latency-database.html">Troubleshoot high latency database</a></h1>
+    <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2022-07-10T19:39:00+00:00">
                 Published: ح 10 يوليو 2022
@@ -36,7 +42,7 @@
         </address>
 <p>In <a href="/category/troubleshooting.html">troubleshooting</a>.</p>
 <p>tags: <a href="/tag/troubleshoot.html">troubleshoot</a> </p>
-</footer><!-- /.post-info --><h2>Problem Statement</h2>
+</footer><!-- /.post-info -->      <h2>Problem Statement</h2>
 <p>How would you troubleshoot a high latency database application, consider a user is experiencing delays per hits to an application due to database latency.</p>
 <h2>Troubleshooting</h2>
 <p>Latency describes the amount of delay on a network or Internet connection. Low latency implies that there are no or almost no delays. High latency implies that there are many delays. One of the main aims of improving performance is to reduce latency.</p>
@@ -60,89 +66,11 @@ Checkout the logs for the memory, CPU used.</p>
 <h2>Reference</h2>
 <ul>
 <li>https://developer.mozilla.org/en-US/docs/Web/Performance/Understanding_latency</li>
-</ul>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/kubernetes-workload-objects.html" rel="bookmark"
-                           title="Permalink to Kubernetes Workload Objects">Kubernetes Workload Objects</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2022-05-22T21:36:00+00:00">
-                Published: ح 22 مايو 2022
-        </abbr>
-		<br />
-        <abbr class="modified" title="2022-07-10T17:42:00+00:00">
-                Updated: ح 10 يوليو 2022
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/hephzibah-pon-cellat-arulprakash.html">Hephzibah Pon Cellat Arulprakash</a>
-        </address>
-<p>In <a href="/category/k8s.html">k8s</a>.</p>
-<p>tags: <a href="/tag/k8s.html">k8s</a> </p>
-</footer><!-- /.post-info -->                <ul>
-<li>Pods</li>
-<li>Deployments</li>
-<li>ReplicaSet</li>
-<li>StatefulSets</li>
-<li>DaemonSet</li>
-<li>Jobs</li>
-<li>CronJob</li>
 </ul>
-                <a class="readmore" href="/kubernetes-workload-objects.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+    </div><!-- /.entry-content -->
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/kubernetes-architecture.html" rel="bookmark"
-                           title="Permalink to Kubernetes Architecture">Kubernetes Architecture</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2022-05-21T21:36:00+00:00">
-                Published: س 21 مايو 2022
-        </abbr>
-		<br />
-        <abbr class="modified" title="2022-07-10T17:09:00+00:00">
-                Updated: ح 10 يوليو 2022
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/hephzibah-pon-cellat-arulprakash.html">Hephzibah Pon Cellat Arulprakash</a>
-        </address>
-<p>In <a href="/category/k8s.html">k8s</a>.</p>
-<p>tags: <a href="/tag/k8s.html">k8s</a> </p>
-</footer><!-- /.post-info -->                <p>A kubernetes cluster is made up of one or more control plane and worker nodes.</p>
-<h2>Control Plane</h2>
-<p>Components of control plane are,</p>
-<ul>
-<li>kube-apiserver</li>
-<li>etcd</li>
-<li>controller manager</li>
-<li>kube-scheduler</li>
-</ul>
-<h2>Worker Nodes</h2>
-<p>Components of a worker node are,</p>
-<ul>
-<li>kubelet</li>
-<li>kube proxy</li>
-<li>container runtime</li>
-</ul>
-                <a class="readmore" href="/kubernetes-architecture.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
-                </section><!-- /#content -->
+  </article>
+</section>
         <section id="extras" class="body">
                 <div class="social">
                         <h2>social</h2>
