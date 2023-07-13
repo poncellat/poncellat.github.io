@@ -14,17 +14,17 @@ Components of control plane are,
 * **kube-apiserver:** It is the frontend for the control plane exposing the Kubernetes API.
 * **etcd:** Consistent and highly available key-value store used as Kubernetes backing store for all cluster data.
 * **controller manager:** Brain, it takes the decisions to bring up containers. Logically each controller is a separate process, but to reduce complexity, they are all compiled into single binary and run in a single process, some types of these controllers are,
-** **Node controller:** Responsible for noticing and responding when nodes goes down.
-** **Job controller:** Watches for job objects that represent one-off tasks, then creates pods to run those tasks to completion.
-** **EndpointSlice controller:** Populates EndpointSlice objects (to provide a link between service and nodes).
-** **ServiceAccount controller:** Creates default service accounts for new namespaces.
+    * **Node controller:** Responsible for noticing and responding when nodes goes down.
+    * **Job controller:** Watches for job objects that represent one-off tasks, then creates pods to run those tasks to completion.
+    * **EndpointSlice controller:** Populates EndpointSlice objects (to provide a link between service and nodes).
+    * **ServiceAccount controller:** Creates default service accounts for new namespaces.
 * **kube-scheduler:** Control plane component that watches for newly created pods with no assigned node and selects a node for them to run on. Factors taken into account for scheduling decision includes,
-** individual and collective resource requirements
-** hardware/software/policy constraints
-** affinity and anti-affinity specifications
-** data locality
-** inter-workload interference, and 
-** deadlines
+    * individual and collective resource requirements
+    * hardware/software/policy constraints
+    * affinity and anti-affinity specifications
+    * data locality
+    * inter-workload interference, and 
+    * deadlines
 
 ## Worker Nodes
 

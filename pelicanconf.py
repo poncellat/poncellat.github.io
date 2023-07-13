@@ -1,6 +1,6 @@
 AUTHOR = 'Hephzibah Pon Cellat Arulprakash'
 SITENAME = 'poncellat\'s Blog'
-SITESUBTITLE = 'coping data from brain to disk :relieved:'
+SITESUBTITLE = 'coping data from brain to disk :D'
 SITEURL = 'https://poncellat.github.io'
 
 GITHUB_URL = 'https://github.com/poncellat/'
