@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>poncellat's Blog - Hephzibah Pon Cellat Arulprakash</title><link>https://poncellat.github.io/</link><description>coping data from brain to disk :relieved:</description><lastBuildDate>Wed, 13 Jul 2022 15:24:00 +0400</lastBuildDate><item><title>Kubernetes Architecture</title><link>https://poncellat.github.io/kubernetes-architecture.html</link><description>&lt;p&gt;A kubernetes cluster is made up of one or more control plane and worker nodes.&lt;/p&gt;
+<rss version="2.0"><channel><title>poncellat's Blog - Hephzibah Pon Cellat Arulprakash</title><link>https://poncellat.github.io/</link><description>coping data from brain to disk :D</description><lastBuildDate>Wed, 13 Jul 2022 15:24:00 +0400</lastBuildDate><item><title>Kubernetes Architecture</title><link>https://poncellat.github.io/kubernetes-architecture.html</link><description>&lt;p&gt;A kubernetes cluster is made up of one or more control plane and worker nodes.&lt;/p&gt;
 &lt;h2&gt;Control Plane&lt;/h2&gt;
 &lt;p&gt;Components of control plane are,&lt;/p&gt;
 &lt;ul&gt;

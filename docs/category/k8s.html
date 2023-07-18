@@ -15,7 +15,7 @@
 <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" />
 </a>
         <header id="banner" class="body">
-                <h1><a href="https://poncellat.github.io/">poncellat's Blog <strong>coping data from brain to disk :relieved:</strong></a></h1>
+                <h1><a href="https://poncellat.github.io/">poncellat's Blog <strong>coping data from brain to disk :D</strong></a></h1>
                 <nav><ul>
                     <li><a href="https://poncellat.github.io/category/about.html">About</a></li>
                     <li class="active"><a href="https://poncellat.github.io/category/k8s.html">k8s</a></li>
@@ -46,18 +46,22 @@
 <ul>
 <li><strong>kube-apiserver:</strong> It is the frontend for the control plane exposing the Kubernetes API.</li>
 <li><strong>etcd:</strong> Consistent and highly available key-value store used as Kubernetes backing store for all cluster data.</li>
-<li><strong>controller manager:</strong> Brain, it takes the decisions to bring up containers. Logically each controller is a separate process, but to reduce complexity, they are all compiled into single binary and run in a single process, some types of these controllers are,
-** <strong>Node controller:</strong> Responsible for noticing and responding when nodes goes down.
-** <strong>Job controller:</strong> Watches for job objects that represent one-off tasks, then creates pods to run those tasks to completion.
-** <strong>EndpointSlice controller:</strong> Populates EndpointSlice objects (to provide a link between service and nodes).
-** <strong>ServiceAccount controller:</strong> Creates default service accounts for new namespaces.</li>
-<li><strong>kube-scheduler:</strong> Control plane component that watches for newly created pods with no assigned node and selects a node for them to run on. Factors taken into account for scheduling decision includes,
-** individual and collective resource requirements
-** hardware/software/policy constraints
-** affinity and anti-affinity specifications
-** data locality
-** inter-workload interference, and 
-** deadlines</li>
+<li><strong>controller manager:</strong> Brain, it takes the decisions to bring up containers. Logically each controller is a separate process, but to reduce complexity, they are all compiled into single binary and run in a single process, some types of these controllers are,<ul>
+<li><strong>Node controller:</strong> Responsible for noticing and responding when nodes goes down.</li>
+<li><strong>Job controller:</strong> Watches for job objects that represent one-off tasks, then creates pods to run those tasks to completion.</li>
+<li><strong>EndpointSlice controller:</strong> Populates EndpointSlice objects (to provide a link between service and nodes).</li>
+<li><strong>ServiceAccount controller:</strong> Creates default service accounts for new namespaces.</li>
+</ul>
+</li>
+<li><strong>kube-scheduler:</strong> Control plane component that watches for newly created pods with no assigned node and selects a node for them to run on. Factors taken into account for scheduling decision includes,<ul>
+<li>individual and collective resource requirements</li>
+<li>hardware/software/policy constraints</li>
+<li>affinity and anti-affinity specifications</li>
+<li>data locality</li>
+<li>inter-workload interference, and </li>
+<li>deadlines</li>
+</ul>
+</li>
 </ul>
 <h2>Worker Nodes</h2>
 <p>Components of a worker node are,</p>
