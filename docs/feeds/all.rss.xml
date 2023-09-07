@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>poncellat's Blog</title><link>https://poncellat.github.io/</link><description>coping data from brain to disk :D</description><lastBuildDate>Wed, 13 Jul 2022 15:24:00 +0400</lastBuildDate><item><title>Kubernetes Architecture</title><link>https://poncellat.github.io/kubernetes-architecture.html</link><description>&lt;p&gt;A kubernetes cluster is made up of one or more control plane and worker nodes.&lt;/p&gt;
+<rss version="2.0"><channel><title>poncellat's Blog</title><link>https://poncellat.github.io/</link><description>coping data from brain to disk :D</description><lastBuildDate>Sun, 04 Sep 2022 09:31:00 +0400</lastBuildDate><item><title>Python Common Gotchas</title><link>https://poncellat.github.io/python-common-gotchas.html</link><description>&lt;p&gt;This article discusses about common gotchas in python with code snippets describing what someone might think it would work like but how it actually works behind the scenes.&lt;/p&gt;
+&lt;h2&gt;Table of Contents&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Mutable Default Arguments&lt;/li&gt;
+&lt;li&gt;Late Binding Closures&lt;/li&gt;
+&lt;li&gt;List Copy&lt;/li&gt;
+&lt;li&gt;Local Variable&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Mutable Default Arguments&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nv"&gt;def&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;append_to&lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;element&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;to&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;[]&lt;span class="ss"&gt;)&lt;/span&gt;:
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nv"&gt;to&lt;/span&gt;.&lt;span class="nv"&gt;append …&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Hephzibah Pon Cellat Arulprakash</dc:creator><pubDate>Sun, 04 Sep 2022 09:31:00 +0400</pubDate><guid isPermaLink="false">tag:poncellat.github.io,2022-09-04:/python-common-gotchas.html</guid><category>python</category><category>python</category></item><item><title>Kubernetes Architecture</title><link>https://poncellat.github.io/kubernetes-architecture.html</link><description>&lt;p&gt;A kubernetes cluster is made up of one or more control plane and worker nodes.&lt;/p&gt;
 &lt;h2&gt;Control Plane&lt;/h2&gt;
 &lt;p&gt;Components of control plane are,&lt;/p&gt;
 &lt;ul&gt;

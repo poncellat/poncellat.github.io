@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>poncellat's Blog - Hephzibah Pon Cellat Arulprakash</title><link href="https://poncellat.github.io/" rel="alternate"></link><link href="https://poncellat.github.io/feeds/hephzibah-pon-cellat-arulprakash.atom.xml" rel="self"></link><id>https://poncellat.github.io/</id><updated>2022-09-04T09:31:00+04:00</updated><subtitle>coping data from brain to disk :D</subtitle><entry><title>Python Common Gotchas</title><link href="https://poncellat.github.io/python-common-gotchas.html" rel="alternate"></link><published>2022-09-04T09:31:00+04:00</published><updated>2022-09-04T09:31:00+04:00</updated><author><name>Hephzibah Pon Cellat Arulprakash</name></author><id>tag:poncellat.github.io,2022-09-04:/python-common-gotchas.html</id><summary type="html">&lt;p&gt;This article discusses about common gotchas in python with code snippets describing what someone might think it would work like but how it actually works behind the scenes.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>poncellat's Blog - Blog</title><link href="https://poncellat.github.io/" rel="alternate"></link><link href="https://poncellat.github.io/feeds/blog.atom.xml" rel="self"></link><id>https://poncellat.github.io/</id><updated>2022-09-04T09:31:00+04:00</updated><subtitle>coping data from brain to disk :D</subtitle><entry><title>Python Common Gotchas</title><link href="https://poncellat.github.io/python-common-gotchas.html" rel="alternate"></link><published>2022-09-04T09:31:00+04:00</published><updated>2022-09-04T09:31:00+04:00</updated><author><name>Hephzibah Pon Cellat Arulprakash</name></author><id>tag:poncellat.github.io,2022-09-04:/python-common-gotchas.html</id><summary type="html">&lt;p&gt;This article discusses about common gotchas in python with code snippets describing what someone might think it would work like but how it actually works behind the scenes.&lt;/p&gt;
 &lt;h2&gt;Table of Contents&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Mutable Default Arguments&lt;/li&gt;
@@ -194,69 +194,4 @@ foo()
 &lt;li&gt;&lt;a href="https://stackoverflow.com/questions/2612802/how-do-i-clone-a-list-so-that-it-doesnt-change-unexpectedly-after-assignment"&gt;https://stackoverflow.com/questions/2612802/how-do-i-clone-a-list-so-that-it-doesnt-change-unexpectedly-after-assignment&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://docs.python.org/3/faq/programming.html#why-am-i-getting-an-unboundlocalerror-when-the-variable-has-a-value"&gt;https://docs.python.org/3/faq/programming.html#why-am-i-getting-an-unboundlocalerror-when-the-variable-has-a-value&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://realpython.com/python-scope-legb-rule/"&gt;https://realpython.com/python-scope-legb-rule/&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><category term="python"></category><category term="python"></category></entry><entry><title>Kubernetes Architecture</title><link href="https://poncellat.github.io/kubernetes-architecture.html" rel="alternate"></link><published>2022-07-13T15:24:00+04:00</published><updated>2022-07-13T15:24:00+04:00</updated><author><name>Hephzibah Pon Cellat Arulprakash</name></author><id>tag:poncellat.github.io,2022-07-13:/kubernetes-architecture.html</id><summary type="html">&lt;p&gt;A kubernetes cluster is made up of one or more control plane and worker nodes.&lt;/p&gt;
-&lt;h2&gt;Control Plane&lt;/h2&gt;
-&lt;p&gt;Components of control plane are,&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;kube-apiserver:&lt;/strong&gt; It is the frontend for the control plane exposing the Kubernetes API.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;etcd:&lt;/strong&gt; Consistent and highly available key-value store used as Kubernetes backing store for all cluster …&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;p&gt;A kubernetes cluster is made up of one or more control plane and worker nodes.&lt;/p&gt;
-&lt;h2&gt;Control Plane&lt;/h2&gt;
-&lt;p&gt;Components of control plane are,&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;kube-apiserver:&lt;/strong&gt; It is the frontend for the control plane exposing the Kubernetes API.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;etcd:&lt;/strong&gt; Consistent and highly available key-value store used as Kubernetes backing store for all cluster data.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;controller manager:&lt;/strong&gt; Brain, it takes the decisions to bring up containers. Logically each controller is a separate process, but to reduce complexity, they are all compiled into single binary and run in a single process, some types of these controllers are,&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Node controller:&lt;/strong&gt; Responsible for noticing and responding when nodes goes down.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Job controller:&lt;/strong&gt; Watches for job objects that represent one-off tasks, then creates pods to run those tasks to completion.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;EndpointSlice controller:&lt;/strong&gt; Populates EndpointSlice objects (to provide a link between service and nodes).&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;ServiceAccount controller:&lt;/strong&gt; Creates default service accounts for new namespaces.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;kube-scheduler:&lt;/strong&gt; Control plane component that watches for newly created pods with no assigned node and selects a node for them to run on. Factors taken into account for scheduling decision includes,&lt;ul&gt;
-&lt;li&gt;individual and collective resource requirements&lt;/li&gt;
-&lt;li&gt;hardware/software/policy constraints&lt;/li&gt;
-&lt;li&gt;affinity and anti-affinity specifications&lt;/li&gt;
-&lt;li&gt;data locality&lt;/li&gt;
-&lt;li&gt;inter-workload interference, and &lt;/li&gt;
-&lt;li&gt;deadlines&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2&gt;Worker Nodes&lt;/h2&gt;
-&lt;p&gt;Components of a worker node are,&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;kubelet:&lt;/strong&gt; An agent that runs on each worker node in the cluster. It makes sure that containers are running in a Pod. It takes a set of PodSpecs that are provided through various mechanisms (like definition yaml file) and ensures that the containers described in those PodSpecs are running and healthy. It doesnot manage containers which were not created by Kubernetes.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;kube proxy:&lt;/strong&gt; It is a network proxy implementing Kubernetes Service concept. It maintains network rules on nodes. These network rules allow network communication to your Pods from network sessions inside or outside of your cluster. kube-proxy uses the operating system packet filtering layer if available or else forwards the traffic itself.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;container runtime:&lt;/strong&gt; It is responsible for running containers. Kubernetes supports container runtimes such as containerd, CRI-O and any other implementation of Kubernetes CRI (Container Runtime Interface).&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2&gt;References&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://kubernetes.io/docs/home/"&gt;Kubernetes Documentation&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><category term="k8s"></category><category term="k8s"></category></entry><entry><title>Troubleshoot high latency database</title><link href="https://poncellat.github.io/troubleshoot-high-latency-database.html" rel="alternate"></link><published>2022-07-10T19:39:00+04:00</published><updated>2022-07-10T19:39:00+04:00</updated><author><name>Hephzibah Pon Cellat Arulprakash</name></author><id>tag:poncellat.github.io,2022-07-10:/troubleshoot-high-latency-database.html</id><summary type="html">&lt;h2&gt;Problem Statement&lt;/h2&gt;
-&lt;p&gt;How would you troubleshoot a high latency database application, consider a user is experiencing delays per hits to an application due to database latency.&lt;/p&gt;
-&lt;h2&gt;Troubleshooting&lt;/h2&gt;
-&lt;p&gt;Latency describes the amount of delay on a network or Internet connection. Low latency implies that there are no or almost no delays …&lt;/p&gt;</summary><content type="html">&lt;h2&gt;Problem Statement&lt;/h2&gt;
-&lt;p&gt;How would you troubleshoot a high latency database application, consider a user is experiencing delays per hits to an application due to database latency.&lt;/p&gt;
-&lt;h2&gt;Troubleshooting&lt;/h2&gt;
-&lt;p&gt;Latency describes the amount of delay on a network or Internet connection. Low latency implies that there are no or almost no delays. High latency implies that there are many delays. One of the main aims of improving performance is to reduce latency.&lt;/p&gt;
-&lt;p&gt;Latency can be due to external or internal factors, below are few points to troubleshoot,&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Database Type:&lt;/strong&gt; Use proper database type&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Disk Latency:&lt;/strong&gt; Check if the storage hardware is efficient&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Geo Distributed:&lt;/strong&gt; Ensure to use geo distributed for low latency and high availability&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Scaling:&lt;/strong&gt; Based on traffic, scale in or scale out, horizontal or vertical&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3&gt;Database Type&lt;/h3&gt;
-&lt;p&gt;nosql has low latency compared to traditional RDBMS&lt;/p&gt;
-&lt;h3&gt;Disk Latency&lt;/h3&gt;
-&lt;p&gt;The type of storage hardware used to store plays a major role, choose the best volume among ssd, network share, or cloud based like EBS&lt;/p&gt;
-&lt;h3&gt;Geo Distributed&lt;/h3&gt;
-&lt;p&gt;Having replicas in various geographical location ultimately reduce latency as the request from users hits the nearest location.&lt;/p&gt;
-&lt;h3&gt;Scaling&lt;/h3&gt;
-&lt;p&gt;Horizontal scaling, adding more instance.
-Vertical scaling, adding more CPU, RAM.
-Checkout the logs for the memory, CPU used.&lt;/p&gt;
-&lt;h2&gt;Reference&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;https://developer.mozilla.org/en-US/docs/Web/Performance/Understanding_latency&lt;/li&gt;
-&lt;/ul&gt;</content><category term="troubleshooting"></category><category term="troubleshoot"></category></entry><entry><title>About</title><link href="https://poncellat.github.io/about.html" rel="alternate"></link><published>2022-05-20T21:36:00+04:00</published><updated>2022-05-20T21:36:00+04:00</updated><author><name>Hephzibah Pon Cellat Arulprakash</name></author><id>tag:poncellat.github.io,2022-05-20:/about.html</id><content type="html">&lt;p&gt;Hi, I am Hephzi&lt;/p&gt;</content><category term="About"></category></entry></feed>
+&lt;/ul&gt;</content><category term="Blog"></category><category term="python"></category></entry></feed>
