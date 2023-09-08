@@ -26,14 +26,262 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="https://poncellat.github.io/python-common-gotchas.html">Python Common Gotchas</a></h1>
+                    <h1 class="entry-title"><a href="https://poncellat.github.io/kubernetes-autoscaling-horizontal-pod-autoscaling.html">Kubernetes | Autoscaling | Horizontal Pod Autoscaling</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2023-09-08T11:33:00+04:00">
+                Published: ج 08 سبتمبر 2023
+        </abbr>
+		<br />
+        <abbr class="modified" title="2023-09-08T11:33:00+04:00">
+                Updated: ج 08 سبتمبر 2023
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://poncellat.github.io/author/hephzibah-pon-cellat-arulprakash.html">Hephzibah Pon Cellat Arulprakash</a>
+        </address>
+<p>In <a href="https://poncellat.github.io/category/k8s.html">k8s</a>.</p>
+<p>tags: <a href="https://poncellat.github.io/tag/k8s.html">k8s</a> </p>
+</footer><!-- /.post-info --><p>This article discusses about Horizontal Pod Autoscaling (HPA), one of the type of autoscaling in kubernetes.</p>
+<h2>What is Horizontal Autoscaling</h2>
+<p>Horizontal autoscaling is that based on the load in CPU and memory, you can scale up or down the number of pods automatically, so that your application can better serve during high or low traffic hours eventually customers can have seemless experience.</p>
+<p>For this purpose you would configure the minimum and maximum number of pods to be created based on the metrics like CPU and memory.</p>
+<p>There is a concept called vertical autoscaling where you add nodes to increase the infrastructure capacity in terms of CPU, RAM, storage etc.,</p>
+<h2>How in Kubernetes</h2>
+<h3>Deploying sample application using Kubernetes Deployment and Service</h3>
+<p>Consider below deployment and service definition yaml file <code>php-apache.yaml</code>. </p>
+<div class="highlight"><pre><span></span><code><span class="n">apiVersion</span><span class="o">:</span><span class="w"> </span><span class="n">apps</span><span class="o">/</span><span class="n">v1</span>
+<span class="n">kind</span><span class="o">:</span><span class="w"> </span><span class="n">Deployment</span>
+<span class="n">metadata</span><span class="o">:</span>
+<span class="w">  </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">php</span><span class="o">-</span><span class="n">apache</span>
+<span class="n">spec</span><span class="o">:</span>
+<span class="w">  </span><span class="n">selector</span><span class="o">:</span>
+<span class="w">    </span><span class="n">matchLabels</span><span class="o">:</span>
+<span class="w">      </span><span class="n">run</span><span class="o">:</span><span class="w"> </span><span class="n">php</span><span class="o">-</span><span class="n">apache</span>
+<span class="w">  </span><span class="n">template</span><span class="o">:</span>
+<span class="w">    </span><span class="n">metadata</span><span class="o">:</span>
+<span class="w">      </span><span class="n">labels</span><span class="o">:</span>
+<span class="w">        </span><span class="n">run</span><span class="o">:</span><span class="w"> </span><span class="n">php</span><span class="o">-</span><span class="n">apache</span>
+<span class="w">    </span><span class="n">spec</span><span class="o">:</span>
+<span class="w">      </span><span class="n">containers</span><span class="o">:</span>
+<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">php</span><span class="o">-</span><span class="n">apache</span>
+<span class="w">        </span><span class="n">image</span><span class="o">:</span><span class="w"> </span><span class="n">registry</span><span class="o">.</span><span class="na">k8s</span><span class="o">.</span><span class="na">io</span><span class="o">/</span><span class="n">hpa</span><span class="o">-</span><span class="n">example</span>
+<span class="w">        </span><span class="n">ports</span><span class="o">:</span>
+<span class="w">        </span><span class="o">-</span><span class="w"> </span><span class="n">containerPort</span><span class="o">:</span><span class="w"> </span><span class="mi">80</span>
+<span class="w">        </span><span class="n">resources</span><span class="o">:</span>
+<span class="w">          </span><span class="n">limits</span><span class="o">:</span>
+<span class="w">            </span><span class="n">cpu</span><span class="o">:</span><span class="w"> </span><span class="mi">500</span><span class="n">m</span>
+<span class="w">          </span><span class="n">requests</span><span class="o">:</span>
+<span class="w">            </span><span class="n">cpu</span><span class="o">:</span><span class="w"> </span><span class="mi">200</span><span class="n">m</span>
+<span class="o">---</span>
+<span class="n">apiVersion</span><span class="o">:</span><span class="w"> </span><span class="n">v1</span>
+<span class="n">kind</span><span class="o">:</span><span class="w"> </span><span class="n">Service</span>
+<span class="n">metadata</span><span class="o">:</span>
+<span class="w">  </span><span class="n">name</span><span class="o">:</span><span class="w"> </span><span class="n">php</span><span class="o">-</span><span class="n">apache</span>
+<span class="w">  </span><span class="n">labels</span><span class="o">:</span>
+<span class="w">    </span><span class="n">run</span><span class="o">:</span><span class="w"> </span><span class="n">php</span><span class="o">-</span><span class="n">apache</span>
+<span class="n">spec</span><span class="o">:</span>
+<span class="w">  </span><span class="n">ports</span><span class="o">:</span>
+<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">port</span><span class="o">:</span><span class="w"> </span><span class="mi">80</span>
+<span class="w">  </span><span class="n">selector</span><span class="o">:</span>
+<span class="w">    </span><span class="n">run</span><span class="o">:</span><span class="w"> </span><span class="n">php</span><span class="o">-</span><span class="n">apache</span>
+</code></pre></div>
+
+<p>Assuming you already have a k8s cluster setup, to create deployment and service resource, </p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>php-apache.yaml
+</code></pre></div>
+
+<p>This would create a deployment and service as below. From the deployment, replicaset is created and from replicaset, pod is created. so we have a service, deployment, replicaset and a pod.</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>all
+NAME<span class="w">                              </span>READY<span class="w">   </span>STATUS<span class="w">    </span>RESTARTS<span class="w">   </span>AGE
+pod/php-apache-7495ff8f5b-gt8r8<span class="w">   </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>4m29s
+
+NAME<span class="w">                 </span>TYPE<span class="w">        </span>CLUSTER-IP<span class="w">      </span>EXTERNAL-IP<span class="w">   </span>PORT<span class="o">(</span>S<span class="o">)</span><span class="w">   </span>AGE
+service/php-apache<span class="w">   </span>ClusterIP<span class="w">   </span><span class="m">10</span>.100.126.40<span class="w">   </span>&lt;none&gt;<span class="w">        </span><span class="m">80</span>/TCP<span class="w">    </span>4m29s
+
+NAME<span class="w">                         </span>READY<span class="w">   </span>UP-TO-DATE<span class="w">   </span>AVAILABLE<span class="w">   </span>AGE
+deployment.apps/php-apache<span class="w">   </span><span class="m">1</span>/1<span class="w">     </span><span class="m">1</span><span class="w">            </span><span class="m">1</span><span class="w">           </span>4m29s
+
+NAME<span class="w">                                    </span>DESIRED<span class="w">   </span>CURRENT<span class="w">   </span>READY<span class="w">   </span>AGE
+replicaset.apps/php-apache-7495ff8f5b<span class="w">   </span><span class="m">1</span><span class="w">         </span><span class="m">1</span><span class="w">         </span><span class="m">1</span><span class="w">       </span>4m29s
+</code></pre></div>
+
+<p>To check if the sample appilication is working, as this service is of type clusterIP, we can either expose the service as nodeport so that it is accessible from host machine, or we can ssh into the cluster and access via the cluster-ip. </p>
+<h3>Testing Application Method 1 (optional)</h3>
+<p>Expose the service php-apache to a new service of type Nodeport so that it will accessible from your local machine and outside of kubernetes cluster. You can now access the app from local machine using the ip address of cluster followed the port exposed in NodePort.</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>expose<span class="w"> </span>service<span class="w"> </span>php-apache<span class="w"> </span>--port<span class="o">=</span><span class="m">80</span><span class="w"> </span>--target-port<span class="o">=</span><span class="m">80</span><span class="w"> </span>--name<span class="o">=</span>php-apache-np<span class="w"> </span>--type<span class="o">=</span>NodePort
+service/php-apache-np<span class="w"> </span>exposed
+$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>svc
+NAME<span class="w">            </span>TYPE<span class="w">        </span>CLUSTER-IP<span class="w">      </span>EXTERNAL-IP<span class="w">   </span>PORT<span class="o">(</span>S<span class="o">)</span><span class="w">        </span>AGE
+php-apache<span class="w">      </span>ClusterIP<span class="w">   </span><span class="m">10</span>.100.126.40<span class="w">   </span>&lt;none&gt;<span class="w">        </span><span class="m">80</span>/TCP<span class="w">         </span>29m
+php-apache-np<span class="w">   </span>NodePort<span class="w">    </span><span class="m">10</span>.102.48.181<span class="w">   </span>&lt;none&gt;<span class="w">        </span><span class="m">80</span>:30708/TCP<span class="w">   </span>4s
+$<span class="w"> </span>minikube<span class="w"> </span>ip
+<span class="m">192</span>.168.49.2
+$<span class="w"> </span>curl<span class="w"> </span>http://192.168.49.2:30708
+OK!
+</code></pre></div>
+
+<h3>Testing Application Method 2 (optional)</h3>
+<p>To ssh into cluster and check the php application, below example assumes the cluster is created using minikube.</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>minikube<span class="w"> </span>ssh
+docker@minikube:~$
+</code></pre></div>
+
+<p>To check the application, use curl with app ip address. The app ip address can be found in cluster-ip from service. <code>kubectl get svc</code></p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>minikube<span class="w"> </span>ssh
+docker@minikube:~$<span class="w"> </span>curl<span class="w"> </span>http://10.100.126.40
+OK!
+</code></pre></div>
+
+<h3>Create Metrics Server</h3>
+<p>Download the latest release of metrics server.</p>
+<div class="highlight"><pre><span></span><code><span class="n">curl</span><span class="w"> </span><span class="o">-</span><span class="n">LO</span><span class="w"> </span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">kubernetes</span><span class="o">-</span><span class="n">sigs</span><span class="o">/</span><span class="n">metrics</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">latest</span><span class="o">/</span><span class="n">download</span><span class="o">/</span><span class="n">components</span><span class="o">.</span><span class="n">yaml</span>
+</code></pre></div>
+
+<p>Edit the components.yaml in your favorite text editor, adding below lines</p>
+<div class="highlight"><pre><span></span><code>  template:
+    metadata:
+      labels:
+        k8s-app: metrics-server
+    spec:
+      hostNetwork: true
+      containers:
+      - args:
+        - --kubelet-insecure-tls
+        - --cert-dir=/tmp
+        - --secure-port=4443
+</code></pre></div>
+
+<p>Apply the components.yaml</p>
+<div class="highlight"><pre><span></span><code>kubectl apply -f components.yaml
+</code></pre></div>
+
+<p>Check for the pods in namespace kube-system</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w">  </span>-n<span class="w"> </span>kube-system
+NAME<span class="w">                               </span>READY<span class="w">   </span>STATUS<span class="w">    </span>RESTARTS<span class="w">      </span>AGE
+...
+metrics-server-77d9b56856-qjxh7<span class="w">    </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">             </span>3m32s
+...
+</code></pre></div>
+
+<p>Check if its installed properly by,</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>top<span class="w"> </span>nodes
+
+NAME<span class="w">       </span>CPU<span class="o">(</span>cores<span class="o">)</span><span class="w">   </span>CPU%<span class="w">   </span>MEMORY<span class="o">(</span>bytes<span class="o">)</span><span class="w">   </span>MEMORY%<span class="w">   </span>
+minikube<span class="w">   </span>389m<span class="w">         </span><span class="m">19</span>%<span class="w">    </span>901Mi<span class="w">           </span><span class="m">11</span>%<span class="w">     </span>
+
+$<span class="w"> </span>kubectl<span class="w"> </span>top<span class="w"> </span>pods
+NAME<span class="w">                          </span>CPU<span class="o">(</span>cores<span class="o">)</span><span class="w">   </span>MEMORY<span class="o">(</span>bytes<span class="o">)</span><span class="w">   </span>
+php-apache-7495ff8f5b-gt8r8<span class="w">   </span>1m<span class="w">           </span>31Mi<span class="w">    </span>
+</code></pre></div>
+
+<p>If it is installed properly you will see the output about the CPU, memory metrics as shown above.</p>
+<h3>Create the Horizontal Pod AutoScaler</h3>
+<p>Create a Horizontal Pod Autoscaler which would autoscale if the CPU usage goes beyond 50% with the minimum and maximum number of pods to be autoscaled.</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>autoscale<span class="w"> </span>deployment<span class="w"> </span>php-apache<span class="w"> </span>--cpu-percent<span class="o">=</span><span class="m">50</span><span class="w"> </span>--min<span class="o">=</span><span class="m">1</span><span class="w"> </span>--max<span class="o">=</span><span class="m">10</span>
+</code></pre></div>
+
+<p>View the HPA resource</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>hpa
+NAME<span class="w">         </span>REFERENCE<span class="w">               </span>TARGETS<span class="w">   </span>MINPODS<span class="w">   </span>MAXPODS<span class="w">   </span>REPLICAS<span class="w">   </span>AGE
+php-apache<span class="w">   </span>Deployment/php-apache<span class="w">   </span><span class="m">0</span>%/50%<span class="w">    </span><span class="m">1</span><span class="w">         </span><span class="m">10</span><span class="w">        </span><span class="m">1</span><span class="w">          </span>65m
+</code></pre></div>
+
+<p>As currently the application has no load, the target is 0%. HPA gets this information from the metrics server installed previously.</p>
+<h3>Increase the Load</h3>
+<p>To increase the load we will be using busybox image, which continously access the application in a loop. In a new terminal,</p>
+<div class="highlight"><pre><span></span><code><span class="o">$</span><span class="w"> </span><span class="n">kubectl</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="o">-</span><span class="n">i</span><span class="w"> </span><span class="o">--</span><span class="n">tty</span><span class="w"> </span><span class="nb">load</span><span class="o">-</span><span class="n">generator</span><span class="w"> </span><span class="o">--</span><span class="n">rm</span><span class="w"> </span><span class="o">--</span><span class="n">image</span><span class="o">=</span><span class="n">busybox</span><span class="p">:</span><span class="mf">1.28</span><span class="w"> </span><span class="o">--</span><span class="n">restart</span><span class="o">=</span><span class="n">Never</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span><span class="w"> </span><span class="o">-</span><span class="n">c</span><span class="w"> </span><span class="s2">&quot;while sleep 0.01; do wget -q -O- http://php-apache; done&quot;</span>
+</code></pre></div>
+
+<p>In the other terminal, after a while, you can see target % is increased leading to autoscale out the deployment which affects the replicasets which in turn increases the number of pods to handle the load.</p>
+<div class="highlight"><pre><span></span><code><span class="o">$</span><span class="w"> </span><span class="n">kubectl</span><span class="w"> </span><span class="n">get</span><span class="w"> </span><span class="n">all</span>
+<span class="n">NAME</span><span class="w">                              </span><span class="n">READY</span><span class="w">   </span><span class="n">STATUS</span><span class="w">    </span><span class="n">RESTARTS</span><span class="w">      </span><span class="n">AGE</span>
+<span class="n">pod</span><span class="o">/</span><span class="nb">load</span><span class="o">-</span><span class="n">generator</span><span class="w">                </span><span class="mi">1</span><span class="o">/</span><span class="mi">1</span><span class="w">     </span><span class="n">Running</span><span class="w">   </span><span class="mi">0</span><span class="w">             </span><span class="mi">105</span><span class="n">s</span>
+<span class="n">pod</span><span class="o">/</span><span class="n">php</span><span class="o">-</span><span class="n">apache</span><span class="o">-</span><span class="mi">7495</span><span class="n">ff8f5b</span><span class="o">-</span><span class="n">gfzhb</span><span class="w">   </span><span class="mi">1</span><span class="o">/</span><span class="mi">1</span><span class="w">     </span><span class="n">Running</span><span class="w">   </span><span class="mi">0</span><span class="w">             </span><span class="mi">68</span><span class="n">s</span>
+<span class="n">pod</span><span class="o">/</span><span class="n">php</span><span class="o">-</span><span class="n">apache</span><span class="o">-</span><span class="mi">7495</span><span class="n">ff8f5b</span><span class="o">-</span><span class="n">gt8r8</span><span class="w">   </span><span class="mi">1</span><span class="o">/</span><span class="mi">1</span><span class="w">     </span><span class="n">Running</span><span class="w">   </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="mi">72</span><span class="n">m</span><span class="w"> </span><span class="n">ago</span><span class="p">)</span><span class="w">   </span><span class="mi">4</span><span class="n">h</span>
+<span class="n">pod</span><span class="o">/</span><span class="n">php</span><span class="o">-</span><span class="n">apache</span><span class="o">-</span><span class="mi">7495</span><span class="n">ff8f5b</span><span class="o">-</span><span class="n">j8fb9</span><span class="w">   </span><span class="mi">1</span><span class="o">/</span><span class="mi">1</span><span class="w">     </span><span class="n">Running</span><span class="w">   </span><span class="mi">0</span><span class="w">             </span><span class="mi">69</span><span class="n">s</span>
+<span class="n">pod</span><span class="o">/</span><span class="n">php</span><span class="o">-</span><span class="n">apache</span><span class="o">-</span><span class="mi">7495</span><span class="n">ff8f5b</span><span class="o">-</span><span class="n">p26g7</span><span class="w">   </span><span class="mi">1</span><span class="o">/</span><span class="mi">1</span><span class="w">     </span><span class="n">Running</span><span class="w">   </span><span class="mi">0</span><span class="w">             </span><span class="mi">53</span><span class="n">s</span>
+<span class="n">pod</span><span class="o">/</span><span class="n">php</span><span class="o">-</span><span class="n">apache</span><span class="o">-</span><span class="mi">7495</span><span class="n">ff8f5b</span><span class="o">-</span><span class="n">vhxt8</span><span class="w">   </span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span><span class="w">     </span><span class="n">Pending</span><span class="w">   </span><span class="mi">0</span><span class="w">             </span><span class="mi">8</span><span class="n">s</span>
+<span class="n">pod</span><span class="o">/</span><span class="n">php</span><span class="o">-</span><span class="n">apache</span><span class="o">-</span><span class="mi">7495</span><span class="n">ff8f5b</span><span class="o">-</span><span class="n">wzlr4</span><span class="w">   </span><span class="mi">1</span><span class="o">/</span><span class="mi">1</span><span class="w">     </span><span class="n">Running</span><span class="w">   </span><span class="mi">0</span><span class="w">             </span><span class="mi">84</span><span class="n">s</span>
+
+<span class="n">NAME</span><span class="w">                    </span><span class="n">TYPE</span><span class="w">        </span><span class="n">CLUSTER</span><span class="o">-</span><span class="n">IP</span><span class="w">      </span><span class="n">EXTERNAL</span><span class="o">-</span><span class="n">IP</span><span class="w">   </span><span class="n">PORT</span><span class="p">(</span><span class="n">S</span><span class="p">)</span><span class="w">        </span><span class="n">AGE</span>
+<span class="n">service</span><span class="o">/</span><span class="n">kubernetes</span><span class="w">      </span><span class="n">ClusterIP</span><span class="w">   </span><span class="mf">10.96</span><span class="o">.</span><span class="mf">0.1</span><span class="w">       </span><span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span><span class="w">        </span><span class="mi">443</span><span class="o">/</span><span class="n">TCP</span><span class="w">        </span><span class="mi">4</span><span class="n">h1m</span>
+<span class="n">service</span><span class="o">/</span><span class="n">php</span><span class="o">-</span><span class="n">apache</span><span class="w">      </span><span class="n">ClusterIP</span><span class="w">   </span><span class="mf">10.100</span><span class="o">.</span><span class="mf">126.40</span><span class="w">   </span><span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span><span class="w">        </span><span class="mi">80</span><span class="o">/</span><span class="n">TCP</span><span class="w">         </span><span class="mi">4</span><span class="n">h</span>
+<span class="n">service</span><span class="o">/</span><span class="n">php</span><span class="o">-</span><span class="n">apache</span><span class="o">-</span><span class="n">np</span><span class="w">   </span><span class="n">NodePort</span><span class="w">    </span><span class="mf">10.102</span><span class="o">.</span><span class="mf">48.181</span><span class="w">   </span><span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span><span class="w">        </span><span class="mi">80</span><span class="p">:</span><span class="mi">30708</span><span class="o">/</span><span class="n">TCP</span><span class="w">   </span><span class="mi">3</span><span class="n">h31m</span>
+
+<span class="n">NAME</span><span class="w">                         </span><span class="n">READY</span><span class="w">   </span><span class="n">UP</span><span class="o">-</span><span class="n">TO</span><span class="o">-</span><span class="n">DATE</span><span class="w">   </span><span class="n">AVAILABLE</span><span class="w">   </span><span class="n">AGE</span>
+<span class="n">deployment</span><span class="o">.</span><span class="n">apps</span><span class="o">/</span><span class="n">php</span><span class="o">-</span><span class="n">apache</span><span class="w">   </span><span class="mi">5</span><span class="o">/</span><span class="mi">6</span><span class="w">     </span><span class="mi">6</span><span class="w">            </span><span class="mi">5</span><span class="w">           </span><span class="mi">4</span><span class="n">h</span>
+
+<span class="n">NAME</span><span class="w">                                    </span><span class="n">DESIRED</span><span class="w">   </span><span class="n">CURRENT</span><span class="w">   </span><span class="n">READY</span><span class="w">   </span><span class="n">AGE</span>
+<span class="n">replicaset</span><span class="o">.</span><span class="n">apps</span><span class="o">/</span><span class="n">php</span><span class="o">-</span><span class="n">apache</span><span class="o">-</span><span class="mi">7495</span><span class="n">ff8f5b</span><span class="w">   </span><span class="mi">6</span><span class="w">         </span><span class="mi">6</span><span class="w">         </span><span class="mi">5</span><span class="w">       </span><span class="mi">4</span><span class="n">h</span>
+
+<span class="n">NAME</span><span class="w">                                             </span><span class="n">REFERENCE</span><span class="w">               </span><span class="n">TARGETS</span><span class="w">   </span><span class="n">MINPODS</span><span class="w">   </span><span class="n">MAXPODS</span><span class="w">   </span><span class="n">REPLICAS</span><span class="w">   </span><span class="n">AGE</span>
+<span class="n">horizontalpodautoscaler</span><span class="o">.</span><span class="n">autoscaling</span><span class="o">/</span><span class="n">php</span><span class="o">-</span><span class="n">apache</span><span class="w">   </span><span class="n">Deployment</span><span class="o">/</span><span class="n">php</span><span class="o">-</span><span class="n">apache</span><span class="w">   </span><span class="mi">56</span><span class="o">%/</span><span class="mi">50</span><span class="o">%</span><span class="w">   </span><span class="mi">1</span><span class="w">         </span><span class="mi">10</span><span class="w">        </span><span class="mi">5</span><span class="w">          </span><span class="mi">70</span><span class="n">m</span>
+</code></pre></div>
+
+<p>Now stop the load to the application by Ctrl+C in the terminal where busybox was run. After few mins you can see the pods would have autoscaled down, decreasing the number of pods due to less or no traffic to the application.</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>all
+NAME<span class="w">                              </span>READY<span class="w">   </span>STATUS<span class="w">    </span>RESTARTS<span class="w">      </span>AGE
+pod/php-apache-7495ff8f5b-gt8r8<span class="w">   </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">1</span><span class="w"> </span><span class="o">(</span>78m<span class="w"> </span>ago<span class="o">)</span><span class="w">   </span>4h7m
+
+NAME<span class="w">                    </span>TYPE<span class="w">        </span>CLUSTER-IP<span class="w">      </span>EXTERNAL-IP<span class="w">   </span>PORT<span class="o">(</span>S<span class="o">)</span><span class="w">        </span>AGE
+service/kubernetes<span class="w">      </span>ClusterIP<span class="w">   </span><span class="m">10</span>.96.0.1<span class="w">       </span>&lt;none&gt;<span class="w">        </span><span class="m">443</span>/TCP<span class="w">        </span>4h7m
+service/php-apache<span class="w">      </span>ClusterIP<span class="w">   </span><span class="m">10</span>.100.126.40<span class="w">   </span>&lt;none&gt;<span class="w">        </span><span class="m">80</span>/TCP<span class="w">         </span>4h7m
+service/php-apache-np<span class="w">   </span>NodePort<span class="w">    </span><span class="m">10</span>.102.48.181<span class="w">   </span>&lt;none&gt;<span class="w">        </span><span class="m">80</span>:30708/TCP<span class="w">   </span>3h37m
+
+NAME<span class="w">                         </span>READY<span class="w">   </span>UP-TO-DATE<span class="w">   </span>AVAILABLE<span class="w">   </span>AGE
+deployment.apps/php-apache<span class="w">   </span><span class="m">1</span>/1<span class="w">     </span><span class="m">1</span><span class="w">            </span><span class="m">1</span><span class="w">           </span>4h7m
+
+NAME<span class="w">                                    </span>DESIRED<span class="w">   </span>CURRENT<span class="w">   </span>READY<span class="w">   </span>AGE
+replicaset.apps/php-apache-7495ff8f5b<span class="w">   </span><span class="m">1</span><span class="w">         </span><span class="m">1</span><span class="w">         </span><span class="m">1</span><span class="w">       </span>4h7m
+
+NAME<span class="w">                                             </span>REFERENCE<span class="w">               </span>TARGETS<span class="w">   </span>MINPODS<span class="w">   </span>MAXPODS<span class="w">   </span>REPLICAS<span class="w">   </span>AGE
+horizontalpodautoscaler.autoscaling/php-apache<span class="w">   </span>Deployment/php-apache<span class="w">   </span><span class="m">0</span>%/50%<span class="w">    </span><span class="m">1</span><span class="w">         </span><span class="m">10</span><span class="w">        </span><span class="m">1</span><span class="w">          </span>76m
+</code></pre></div>
+
+<h3>Cleanup</h3>
+<ul>
+<li>Remove the application deployment and service</li>
+</ul>
+<div class="highlight"><pre><span></span><code>kubectl delete -f php-apache.yaml
+</code></pre></div>
+
+<ul>
+<li>Optionally remove the NodePort service if created</li>
+</ul>
+<div class="highlight"><pre><span></span><code>kubectl delete svc php-apache-np
+</code></pre></div>
+
+<ul>
+<li>Remove the metrics server</li>
+</ul>
+<div class="highlight"><pre><span></span><code>kubectl delete -f components.yaml
+</code></pre></div>
+
+<ul>
+<li>Remove HPAs</li>
+</ul>
+<div class="highlight"><pre><span></span><code>kubectl delete hpa php-apache
+</code></pre></div>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="https://poncellat.github.io/python-common-gotchas.html" rel="bookmark"
+                           title="Permalink to Python Common Gotchas">Python Common Gotchas</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2022-09-04T09:31:00+04:00">
-                Published: Sun 04 September 2022
+                Published: ح 04 سبتمبر 2022
         </abbr>
 		<br />
         <abbr class="modified" title="2022-09-04T09:31:00+04:00">
-                Updated: Sun 04 September 2022
+                Updated: ح 04 سبتمبر 2022
         </abbr>
 
         <address class="vcard author">
@@ -41,7 +289,7 @@
         </address>
 <p>In <a href="https://poncellat.github.io/category/python.html">python</a>.</p>
 <p>tags: <a href="https://poncellat.github.io/tag/python.html">python</a> </p>
-</footer><!-- /.post-info --><p>This article discusses about common gotchas in python with code snippets describing what someone might think it would work like but how it actually works behind the scenes.</p>
+</footer><!-- /.post-info -->                <p>This article discusses about common gotchas in python with code snippets describing what someone might think it would work like but how it actually works behind the scenes.</p>
 <h2>Table of Contents</h2>
 <ul>
 <li>Mutable Default Arguments</li>
@@ -51,187 +299,10 @@
 </ul>
 <h2>Mutable Default Arguments</h2>
 <div class="highlight"><pre><span></span><code><span class="nv">def</span><span class="w"> </span><span class="nv">append_to</span><span class="ss">(</span><span class="nv">element</span>,<span class="w"> </span><span class="nv">to</span><span class="o">=</span>[]<span class="ss">)</span>:
-<span class="w">    </span><span class="nv">to</span>.<span class="nv">append</span><span class="ss">(</span><span class="nv">element</span><span class="ss">)</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nv">to</span>
-
-<span class="nv">my_list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">append_to</span><span class="ss">(</span><span class="mi">2</span><span class="ss">)</span>
-<span class="nv">print</span><span class="ss">(</span><span class="nv">my_list</span><span class="ss">)</span>
-
-<span class="nv">my_other_list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">append_to</span><span class="ss">(</span><span class="mi">4</span><span class="ss">)</span>
-<span class="nv">print</span><span class="ss">(</span><span class="nv">my_other_list</span><span class="ss">)</span>
-</code></pre></div>
-
-<h3>What You Might Have Expected to Happen</h3>
-<p>A new list is created each time the function is called if a second argument isn’t provided, so that the output is:</p>
-<div class="highlight"><pre><span></span><code><span class="k">[2]</span>
-<span class="k">[4]</span>
-</code></pre></div>
-
-<h3>What actually happens</h3>
-<p>A new list is created once when the function is defined, and the same list is used in each successive call.
-Python’s default arguments are evaluated once when the function is defined, not each time the function is called. This means that if you use a mutable default argument and mutate it, you will and have mutated that object for all future calls to the function as well.</p>
-<div class="highlight"><pre><span></span><code><span class="k">[2]</span>
-<span class="k">[2, 4]</span>
-</code></pre></div>
-
-<h3>What you should do instead</h3>
-<p>Create a new object each time the function is called, by using a default argument to signal that no argument was provided (None is often a good choice).</p>
-<div class="highlight"><pre><span></span><code><span class="nv">def</span><span class="w"> </span><span class="nv">append_to</span><span class="ss">(</span><span class="nv">element</span>,<span class="w"> </span><span class="nv">to</span><span class="o">=</span><span class="nv">None</span><span class="ss">)</span>:
-
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">None</span>:
-<span class="w">        </span><span class="nv">to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>[]
-
-<span class="w">    </span><span class="nv">to</span>.<span class="nv">append</span><span class="ss">(</span><span class="nv">element</span><span class="ss">)</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nv">to</span>
-</code></pre></div>
-
-<h2>Late Binding Closures</h2>
-<div class="highlight"><pre><span></span><code><span class="n">def</span><span class="w"> </span><span class="n">create_multipliers</span><span class="p">()</span><span class="o">:</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="n">lambda</span><span class="w"> </span><span class="n">x</span><span class="o">:</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
-
-
-<span class="k">for</span><span class="w"> </span><span class="n">multiplier</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">create_multipliers</span><span class="p">()</span><span class="o">:</span>
-<span class="w">    </span><span class="n">print</span><span class="p">(</span><span class="n">multiplier</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
-</code></pre></div>
-
-<h3>What You Might Have Expected to Happen</h3>
-<p>A list containing five functions, That each have their own closed-over i variable that multiplies their argument, producing:</p>
-<div class="highlight"><pre><span></span><code><span class="mf">0</span>
-<span class="mf">2</span>
-<span class="mf">4</span>
-<span class="mf">6</span>
-<span class="mf">8</span>
-</code></pre></div>
-
-<h3>What actually happens</h3>
-<p>Five functions are created but all of them just multiply x by 4.
-Python’s closures are late binding. This means that the values of variables used in closures are looked up at the time the inner function is called.
-Here, whenever any of the returned functions are called, the value of i is looked up in the surrounding scope at call time. By then, the loop has completed and i is left with its final value of 4.</p>
-<div class="highlight"><pre><span></span><code><span class="mf">8</span>
-<span class="mf">8</span>
-<span class="mf">8</span>
-<span class="mf">8</span>
-<span class="mf">8</span>
-</code></pre></div>
-
-<h3>What you should do instead</h3>
-<p>You can create a closure that binds immediately to its arguments by using a default argument.</p>
-<div class="highlight"><pre><span></span><code><span class="nv">def</span><span class="w"> </span><span class="nv">create_multipliers</span><span class="ss">()</span>:
-
-<span class="w">    </span><span class="k">return</span><span class="w"> </span>[<span class="nv">lambda</span><span class="w"> </span><span class="nv">x</span>,<span class="w"> </span><span class="nv">i</span><span class="o">=</span><span class="nv">i</span><span class="w"> </span>:<span class="w"> </span><span class="nv">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">i</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">range</span><span class="ss">(</span><span class="mi">5</span><span class="ss">)</span>]
-</code></pre></div>
-
-<h2>List Copy</h2>
-<div class="highlight"><pre><span></span><code>array1 = [1, 2, 3, 4, 5]
-
-array2 = array1
-array2[0] = 10
-
-print(array1)
-print(array2)
-</code></pre></div>
-
-<h3>What You Might Have Expected to Happen</h3>
-<ul>
-<li>array1 has values 1, 2, 3, 4, 5</li>
-<li>array2 is created with same values as like array1</li>
-<li>array2 first element is modified to 10</li>
-<li>array1 values are not changed</li>
-</ul>
-<div class="highlight"><pre><span></span><code><span class="k">[1, 2, 3, 4, 5]</span>
-<span class="k">[10, 2, 3, 4, 5]</span>
-</code></pre></div>
-
-<h3>What actually happens</h3>
-<ul>
-<li>Variables are simply names that refer to objects.</li>
-<li>Doing array2=array1 doesn’t create a copy of the list</li>
-<li>It creates a new variable array2 that refers to the same object array1 refers to.</li>
-<li>This means that there is only one object (the list), and both array1 and array2 refer to it.</li>
-<li>Lists are mutable, which means that you can change their content.</li>
-</ul>
-<div class="highlight"><pre><span></span><code><span class="k">[10, 2, 3, 4, 5]</span>
-<span class="k">[10, 2, 3, 4, 5]</span>
-</code></pre></div>
-
-<h3>What you should do instead</h3>
-<p>Create a another object with same values of array1 using list copy method or slicing or list method.</p>
-<div class="highlight"><pre><span></span><code>array2 = array1.copy()
-
-# or
-
-array2 = array1[:]
-
-# or
-
-array2 = list(array1)
-</code></pre></div>
-
-<h2>Local Variable</h2>
-<p>Consider the below two code snippets</p>
-<div class="highlight"><pre><span></span><code>x = 1
-
-def foo():
-    print(x)
-
-foo()
-</code></pre></div>
-
-<div class="highlight"><pre><span></span><code>x = 1
-
-def foo():
-    x += 1
-    print(x)
-
-
-foo()
-</code></pre></div>
-
-<h3>What You Might Have Expected to Happen</h3>
-<ul>
-<li>First code snippet prints x value 10</li>
-<li>Second code snippet should be x = x+1 and print 11</li>
-</ul>
-<div class="highlight"><pre><span></span><code><span class="n">snippet1</span><span class="o">:</span><span class="w"> </span><span class="mi">10</span>
-<span class="n">snippet2</span><span class="o">:</span><span class="w"> </span><span class="mi">11</span>
-</code></pre></div>
-
-<h3>What actually happens</h3>
-<ul>
-<li>When you make an assignment to a variable in a scope, that variable becomes local to that scope and shadows any similarly named variable in the outer scope.</li>
-<li>Since the first statement in foo assigns a new value to x, the compiler recognizes it as a local variable.</li>
-<li>Consequently when the next statement print(x) attempts to print the uninitialized local variable and an error results.</li>
-</ul>
-<div class="highlight"><pre><span></span><code><span class="n">snippet1</span><span class="o">:</span><span class="w"> </span><span class="mi">10</span>
-<span class="n">snippet2</span><span class="o">:</span><span class="w"> </span><span class="n">UnboundLocalError</span><span class="o">:</span><span class="w"> </span><span class="n">local</span><span class="w"> </span><span class="n">variable</span><span class="w"> </span><span class="s1">&#39;x&#39;</span><span class="w"> </span><span class="n">referenced</span><span class="w"> </span><span class="n">before</span><span class="w"> </span><span class="n">assignment</span>
-</code></pre></div>
-
-<h3>What you should do instead</h3>
-<p>Use the global keyword to access the outer scope variable.</p>
-<div class="highlight"><pre><span></span><code>x = 10
-
-def foo():
-    global x
-    x += 1
-    print(x)
-
-
-foo()
-</code></pre></div>
-
-<h2>References</h2>
-<ul>
-<li><a href="https://docs.python-guide.org/writing/gotchas/">https://docs.python-guide.org/writing/gotchas/</a></li>
-<li><a href="https://docs.python.org/3/faq/programming.html#why-did-changing-list-y-also-change-list-x">https://docs.python.org/3/faq/programming.html#why-did-changing-list-y-also-change-list-x</a></li>
-<li><a href="https://stackoverflow.com/questions/2612802/how-do-i-clone-a-list-so-that-it-doesnt-change-unexpectedly-after-assignment">https://stackoverflow.com/questions/2612802/how-do-i-clone-a-list-so-that-it-doesnt-change-unexpectedly-after-assignment</a></li>
-<li><a href="https://docs.python.org/3/faq/programming.html#why-am-i-getting-an-unboundlocalerror-when-the-variable-has-a-value">https://docs.python.org/3/faq/programming.html#why-am-i-getting-an-unboundlocalerror-when-the-variable-has-a-value</a></li>
-<li><a href="https://realpython.com/python-scope-legb-rule/">https://realpython.com/python-scope-legb-rule/</a></li>
-</ul>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+<span class="w">    </span><span class="nv">to</span>.<span class="nv">append …</span></code></pre></div>
+                <a class="readmore" href="https://poncellat.github.io/python-common-gotchas.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -242,11 +313,11 @@ foo()
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2022-07-13T15:24:00+04:00">
-                Published: Wed 13 July 2022
+                Published: ر 13 يوليو 2022
         </abbr>
 		<br />
         <abbr class="modified" title="2022-07-13T15:24:00+04:00">
-                Updated: Wed 13 July 2022
+                Updated: ر 13 يوليو 2022
         </abbr>
 
         <address class="vcard author">
@@ -273,11 +344,11 @@ foo()
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2022-07-10T19:39:00+04:00">
-                Published: Sun 10 July 2022
+                Published: ح 10 يوليو 2022
         </abbr>
 		<br />
         <abbr class="modified" title="2022-07-10T19:39:00+04:00">
-                Updated: Sun 10 July 2022
+                Updated: ح 10 يوليو 2022
         </abbr>
 
         <address class="vcard author">
@@ -302,11 +373,11 @@ foo()
                 <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2022-05-20T21:36:00+04:00">
-                Published: Fri 20 May 2022
+                Published: ج 20 مايو 2022
         </abbr>
 		<br />
         <abbr class="modified" title="2022-05-20T21:36:00+04:00">
-                Updated: Fri 20 May 2022
+                Updated: ج 20 مايو 2022
         </abbr>
 
         <address class="vcard author">

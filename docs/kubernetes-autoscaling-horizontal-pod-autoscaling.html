@@ -4,10 +4,11 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="generator" content="Pelican" />
-        <title>poncellat's Blog</title>
+        <title>Kubernetes | Autoscaling | Horizontal Pod Autoscaling</title>
         <link rel="stylesheet" href="https://poncellat.github.io/theme/css/main.css" />
         <link href="https://poncellat.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="poncellat's Blog Atom Feed" />
         <link href="https://poncellat.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="poncellat's Blog RSS Feed" />
+        <meta name="description" content="This article discusses about Horizontal Pod Autoscaling (HPA), one of the type of autoscaling in kubernetes. What is Horizontal Autoscaling..." />
 </head>
 
 <body id="index" class="home">
@@ -18,15 +19,20 @@
                 <h1><a href="https://poncellat.github.io/">poncellat's Blog <strong>coping data from brain to disk :D</strong></a></h1>
                 <nav><ul>
                     <li><a href="https://poncellat.github.io/category/about.html">About</a></li>
-                    <li><a href="https://poncellat.github.io/category/k8s.html">k8s</a></li>
+                    <li class="active"><a href="https://poncellat.github.io/category/k8s.html">k8s</a></li>
                     <li><a href="https://poncellat.github.io/category/python.html">python</a></li>
                     <li><a href="https://poncellat.github.io/category/troubleshooting.html">troubleshooting</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="https://poncellat.github.io/kubernetes-autoscaling-horizontal-pod-autoscaling.html" rel="bookmark"
+           title="Permalink to Kubernetes | Autoscaling | Horizontal Pod Autoscaling">Kubernetes | Autoscaling | Horizontal Pod Autoscaling</a></h1>
+    </header>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="https://poncellat.github.io/kubernetes-autoscaling-horizontal-pod-autoscaling.html">Kubernetes | Autoscaling | Horizontal Pod Autoscaling</a></h1>
+    <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2023-09-08T11:33:00+04:00">
                 Published: ج 08 سبتمبر 2023
@@ -41,7 +47,7 @@
         </address>
 <p>In <a href="https://poncellat.github.io/category/k8s.html">k8s</a>.</p>
 <p>tags: <a href="https://poncellat.github.io/tag/k8s.html">k8s</a> </p>
-</footer><!-- /.post-info --><p>This article discusses about Horizontal Pod Autoscaling (HPA), one of the type of autoscaling in kubernetes.</p>
+</footer><!-- /.post-info -->      <p>This article discusses about Horizontal Pod Autoscaling (HPA), one of the type of autoscaling in kubernetes.</p>
 <h2>What is Horizontal Autoscaling</h2>
 <p>Horizontal autoscaling is that based on the load in CPU and memory, you can scale up or down the number of pods automatically, so that your application can better serve during high or low traffic hours eventually customers can have seemless experience.</p>
 <p>For this purpose you would configure the minimum and maximum number of pods to be created based on the metrics like CPU and memory.</p>
@@ -261,136 +267,11 @@ horizontalpodautoscaler.autoscaling/php-apache<span class="w">   </span>Deployme
 <li>Remove HPAs</li>
 </ul>
 <div class="highlight"><pre><span></span><code>kubectl delete hpa php-apache
-</code></pre></div>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</code></pre></div>
+    </div><!-- /.entry-content -->
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://poncellat.github.io/python-common-gotchas.html" rel="bookmark"
-                           title="Permalink to Python Common Gotchas">Python Common Gotchas</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2022-09-04T09:31:00+04:00">
-                Published: ح 04 سبتمبر 2022
-        </abbr>
-		<br />
-        <abbr class="modified" title="2022-09-04T09:31:00+04:00">
-                Updated: ح 04 سبتمبر 2022
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://poncellat.github.io/author/hephzibah-pon-cellat-arulprakash.html">Hephzibah Pon Cellat Arulprakash</a>
-        </address>
-<p>In <a href="https://poncellat.github.io/category/python.html">python</a>.</p>
-<p>tags: <a href="https://poncellat.github.io/tag/python.html">python</a> </p>
-</footer><!-- /.post-info -->                <p>This article discusses about common gotchas in python with code snippets describing what someone might think it would work like but how it actually works behind the scenes.</p>
-<h2>Table of Contents</h2>
-<ul>
-<li>Mutable Default Arguments</li>
-<li>Late Binding Closures</li>
-<li>List Copy</li>
-<li>Local Variable</li>
-</ul>
-<h2>Mutable Default Arguments</h2>
-<div class="highlight"><pre><span></span><code><span class="nv">def</span><span class="w"> </span><span class="nv">append_to</span><span class="ss">(</span><span class="nv">element</span>,<span class="w"> </span><span class="nv">to</span><span class="o">=</span>[]<span class="ss">)</span>:
-<span class="w">    </span><span class="nv">to</span>.<span class="nv">append …</span></code></pre></div>
-                <a class="readmore" href="https://poncellat.github.io/python-common-gotchas.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://poncellat.github.io/kubernetes-architecture.html" rel="bookmark"
-                           title="Permalink to Kubernetes Architecture">Kubernetes Architecture</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2022-07-13T15:24:00+04:00">
-                Published: ر 13 يوليو 2022
-        </abbr>
-		<br />
-        <abbr class="modified" title="2022-07-13T15:24:00+04:00">
-                Updated: ر 13 يوليو 2022
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://poncellat.github.io/author/hephzibah-pon-cellat-arulprakash.html">Hephzibah Pon Cellat Arulprakash</a>
-        </address>
-<p>In <a href="https://poncellat.github.io/category/k8s.html">k8s</a>.</p>
-<p>tags: <a href="https://poncellat.github.io/tag/k8s.html">k8s</a> </p>
-</footer><!-- /.post-info -->                <p>A kubernetes cluster is made up of one or more control plane and worker nodes.</p>
-<h2>Control Plane</h2>
-<p>Components of control plane are,</p>
-<ul>
-<li><strong>kube-apiserver:</strong> It is the frontend for the control plane exposing the Kubernetes API.</li>
-<li><strong>etcd:</strong> Consistent and highly available key-value store used as Kubernetes backing store for all cluster …</li></ul>
-                <a class="readmore" href="https://poncellat.github.io/kubernetes-architecture.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://poncellat.github.io/troubleshoot-high-latency-database.html" rel="bookmark"
-                           title="Permalink to Troubleshoot high latency database">Troubleshoot high latency database</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2022-07-10T19:39:00+04:00">
-                Published: ح 10 يوليو 2022
-        </abbr>
-		<br />
-        <abbr class="modified" title="2022-07-10T19:39:00+04:00">
-                Updated: ح 10 يوليو 2022
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://poncellat.github.io/author/hephzibah-pon-cellat-arulprakash.html">Hephzibah Pon Cellat Arulprakash</a>
-        </address>
-<p>In <a href="https://poncellat.github.io/category/troubleshooting.html">troubleshooting</a>.</p>
-<p>tags: <a href="https://poncellat.github.io/tag/troubleshoot.html">troubleshoot</a> </p>
-</footer><!-- /.post-info -->                <h2>Problem Statement</h2>
-<p>How would you troubleshoot a high latency database application, consider a user is experiencing delays per hits to an application due to database latency.</p>
-<h2>Troubleshooting</h2>
-<p>Latency describes the amount of delay on a network or Internet connection. Low latency implies that there are no or almost no delays …</p>
-                <a class="readmore" href="https://poncellat.github.io/troubleshoot-high-latency-database.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://poncellat.github.io/about.html" rel="bookmark"
-                           title="Permalink to About">About</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2022-05-20T21:36:00+04:00">
-                Published: ج 20 مايو 2022
-        </abbr>
-		<br />
-        <abbr class="modified" title="2022-05-20T21:36:00+04:00">
-                Updated: ج 20 مايو 2022
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://poncellat.github.io/author/hephzibah-pon-cellat-arulprakash.html">Hephzibah Pon Cellat Arulprakash</a>
-        </address>
-<p>In <a href="https://poncellat.github.io/category/about.html">About</a>.</p>
-
-</footer><!-- /.post-info -->                <p>Hi, I am Hephzi</p>
-                <a class="readmore" href="https://poncellat.github.io/about.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
-                </section><!-- /#content -->
+  </article>
+</section>
         <section id="extras" class="body">
                 <div class="social">
                         <h2>social</h2>
