@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="https://poncellat.github.io/theme/css/main.css" />
         <link href="https://poncellat.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="poncellat's Blog Atom Feed" />
         <link href="https://poncellat.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="poncellat's Blog RSS Feed" />
-        <meta name="description" content="This article discusses about Horizontal Pod Autoscaling (HPA), one of the type of autoscaling in kubernetes. What is Horizontal Autoscaling..." />
+        <meta name="description" content="This article discusses Horizontal Pod Autoscaling (HPA), one of the types of autoscaling in Kubernetes. What is Horizontal Autoscaling Horizontal..." />
 </head>
 
 <body id="index" class="home">
@@ -35,11 +35,11 @@
     <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2023-09-08T11:33:00+04:00">
-                Published: ج 08 سبتمبر 2023
+                Published: Fri 08 September 2023
         </abbr>
 		<br />
         <abbr class="modified" title="2023-09-08T11:33:00+04:00">
-                Updated: ج 08 سبتمبر 2023
+                Updated: Fri 08 September 2023
         </abbr>
 
         <address class="vcard author">
@@ -47,11 +47,11 @@
         </address>
 <p>In <a href="https://poncellat.github.io/category/k8s.html">k8s</a>.</p>
 <p>tags: <a href="https://poncellat.github.io/tag/k8s.html">k8s</a> </p>
-</footer><!-- /.post-info -->      <p>This article discusses about Horizontal Pod Autoscaling (HPA), one of the type of autoscaling in kubernetes.</p>
+</footer><!-- /.post-info -->      <p>This article discusses Horizontal Pod Autoscaling (HPA), one of the types of autoscaling in Kubernetes.</p>
 <h2>What is Horizontal Autoscaling</h2>
-<p>Horizontal autoscaling is that based on the load in CPU and memory, you can scale up or down the number of pods automatically, so that your application can better serve during high or low traffic hours eventually customers can have seemless experience.</p>
-<p>For this purpose you would configure the minimum and maximum number of pods to be created based on the metrics like CPU and memory.</p>
-<p>There is a concept called vertical autoscaling where you add nodes to increase the infrastructure capacity in terms of CPU, RAM, storage etc.,</p>
+<p>Horizontal autoscaling is based on the load in CPU and memory, you can scale up or down the number of pods automatically so that your application can better serve during high or low traffic hours eventually customers can have a seamless experience.</p>
+<p>For this purpose, you would configure the minimum and maximum number of pods to be created based on metrics like CPU and memory.</p>
+<p>There is a concept called vertical autoscaling where you add nodes to increase the infrastructure capacity in terms of CPU, RAM, storage, etc.,</p>
 <h2>How in Kubernetes</h2>
 <h3>Deploying sample application using Kubernetes Deployment and Service</h3>
 <p>Consider below deployment and service definition yaml file <code>php-apache.yaml</code>. </p>
@@ -92,11 +92,11 @@
 <span class="w">    </span><span class="n">run</span><span class="o">:</span><span class="w"> </span><span class="n">php</span><span class="o">-</span><span class="n">apache</span>
 </code></pre></div>
 
-<p>Assuming you already have a k8s cluster setup, to create deployment and service resource, </p>
+<p>Assuming you already have a k8s cluster setup, to create deployment and service resources, </p>
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>php-apache.yaml
 </code></pre></div>
 
-<p>This would create a deployment and service as below. From the deployment, replicaset is created and from replicaset, pod is created. so we have a service, deployment, replicaset and a pod.</p>
+<p>This would create a deployment and service as below. From the deployment, the replicaset is created and from the replicaset, pods are created. so we have a service, deployment, replicaset, and pod.</p>
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>all
 NAME<span class="w">                              </span>READY<span class="w">   </span>STATUS<span class="w">    </span>RESTARTS<span class="w">   </span>AGE
 pod/php-apache-7495ff8f5b-gt8r8<span class="w">   </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>4m29s
@@ -111,9 +111,9 @@ NAME<span class="w">                                    </span>DESIRED<span clas
 replicaset.apps/php-apache-7495ff8f5b<span class="w">   </span><span class="m">1</span><span class="w">         </span><span class="m">1</span><span class="w">         </span><span class="m">1</span><span class="w">       </span>4m29s
 </code></pre></div>
 
-<p>To check if the sample appilication is working, as this service is of type clusterIP, we can either expose the service as nodeport so that it is accessible from host machine, or we can ssh into the cluster and access via the cluster-ip. </p>
+<p>To check if the sample application is working, as this service is of type Cluster-IP, we can either expose the service as NodePort so that it is accessible from the host machine, or we can ssh into the cluster and access via the Cluster-IP.</p>
 <h3>Testing Application Method 1 (optional)</h3>
-<p>Expose the service php-apache to a new service of type Nodeport so that it will accessible from your local machine and outside of kubernetes cluster. You can now access the app from local machine using the ip address of cluster followed the port exposed in NodePort.</p>
+<p>Expose the service php-apache to a new service of type Nodeport so that it will be accessible from your local machine and outside of the Kubernetes cluster. You can now access the app from the local machine using the IP address of the cluster followed by the port exposed in NodePort.</p>
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>expose<span class="w"> </span>service<span class="w"> </span>php-apache<span class="w"> </span>--port<span class="o">=</span><span class="m">80</span><span class="w"> </span>--target-port<span class="o">=</span><span class="m">80</span><span class="w"> </span>--name<span class="o">=</span>php-apache-np<span class="w"> </span>--type<span class="o">=</span>NodePort
 service/php-apache-np<span class="w"> </span>exposed
 $<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>svc
@@ -127,23 +127,23 @@ OK!
 </code></pre></div>
 
 <h3>Testing Application Method 2 (optional)</h3>
-<p>To ssh into cluster and check the php application, below example assumes the cluster is created using minikube.</p>
+<p>To SSH into the cluster and check the PHP application, the below example assumes the cluster is created using Minikube.</p>
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>minikube<span class="w"> </span>ssh
 docker@minikube:~$
 </code></pre></div>
 
-<p>To check the application, use curl with app ip address. The app ip address can be found in cluster-ip from service. <code>kubectl get svc</code></p>
+<p>To check the application, use curl with the app IP address. The app IP address can be found in Cluster-IP from the service by executing <code>kubectl get svc php-apache</code>.</p>
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>minikube<span class="w"> </span>ssh
 docker@minikube:~$<span class="w"> </span>curl<span class="w"> </span>http://10.100.126.40
 OK!
 </code></pre></div>
 
 <h3>Create Metrics Server</h3>
-<p>Download the latest release of metrics server.</p>
+<p>Download the latest release of the metrics server.</p>
 <div class="highlight"><pre><span></span><code><span class="n">curl</span><span class="w"> </span><span class="o">-</span><span class="n">LO</span><span class="w"> </span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">kubernetes</span><span class="o">-</span><span class="n">sigs</span><span class="o">/</span><span class="n">metrics</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">latest</span><span class="o">/</span><span class="n">download</span><span class="o">/</span><span class="n">components</span><span class="o">.</span><span class="n">yaml</span>
 </code></pre></div>
 
-<p>Edit the components.yaml in your favorite text editor, adding below lines</p>
+<p>Add the lines <code>hostNetwork: true</code> and <code>- --kubelet-insecure-tls</code> in <code>components.yaml</code>.</p>
 <div class="highlight"><pre><span></span><code>  template:
     metadata:
       labels:
@@ -157,11 +157,11 @@ OK!
         - --secure-port=4443
 </code></pre></div>
 
-<p>Apply the components.yaml</p>
+<p>Apply the <code>components.yaml</code>.</p>
 <div class="highlight"><pre><span></span><code>kubectl apply -f components.yaml
 </code></pre></div>
 
-<p>Check for the pods in namespace kube-system</p>
+<p>Check for the pods in the namespace kube-system.</p>
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w">  </span>-n<span class="w"> </span>kube-system
 NAME<span class="w">                               </span>READY<span class="w">   </span>STATUS<span class="w">    </span>RESTARTS<span class="w">      </span>AGE
 ...
@@ -169,9 +169,8 @@ metrics-server-77d9b56856-qjxh7<span class="w">    </span><span class="m">1</spa
 ...
 </code></pre></div>
 
-<p>Check if its installed properly by,</p>
+<p>Check if it's installed properly by,</p>
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>top<span class="w"> </span>nodes
-
 NAME<span class="w">       </span>CPU<span class="o">(</span>cores<span class="o">)</span><span class="w">   </span>CPU%<span class="w">   </span>MEMORY<span class="o">(</span>bytes<span class="o">)</span><span class="w">   </span>MEMORY%<span class="w">   </span>
 minikube<span class="w">   </span>389m<span class="w">         </span><span class="m">19</span>%<span class="w">    </span>901Mi<span class="w">           </span><span class="m">11</span>%<span class="w">     </span>
 
@@ -180,25 +179,25 @@ NAME<span class="w">                          </span>CPU<span class="o">(</span>
 php-apache-7495ff8f5b-gt8r8<span class="w">   </span>1m<span class="w">           </span>31Mi<span class="w">    </span>
 </code></pre></div>
 
-<p>If it is installed properly you will see the output about the CPU, memory metrics as shown above.</p>
+<p>If it is installed properly you will see the output about the CPU, and memory metrics as shown above.</p>
 <h3>Create the Horizontal Pod AutoScaler</h3>
 <p>Create a Horizontal Pod Autoscaler which would autoscale if the CPU usage goes beyond 50% with the minimum and maximum number of pods to be autoscaled.</p>
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>autoscale<span class="w"> </span>deployment<span class="w"> </span>php-apache<span class="w"> </span>--cpu-percent<span class="o">=</span><span class="m">50</span><span class="w"> </span>--min<span class="o">=</span><span class="m">1</span><span class="w"> </span>--max<span class="o">=</span><span class="m">10</span>
 </code></pre></div>
 
-<p>View the HPA resource</p>
+<p>View the HPA resource,</p>
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>hpa
 NAME<span class="w">         </span>REFERENCE<span class="w">               </span>TARGETS<span class="w">   </span>MINPODS<span class="w">   </span>MAXPODS<span class="w">   </span>REPLICAS<span class="w">   </span>AGE
 php-apache<span class="w">   </span>Deployment/php-apache<span class="w">   </span><span class="m">0</span>%/50%<span class="w">    </span><span class="m">1</span><span class="w">         </span><span class="m">10</span><span class="w">        </span><span class="m">1</span><span class="w">          </span>65m
 </code></pre></div>
 
-<p>As currently the application has no load, the target is 0%. HPA gets this information from the metrics server installed previously.</p>
+<p>As currently, the application has no load, the target is 0%. HPA gets this information from the metrics server installed previously.</p>
 <h3>Increase the Load</h3>
-<p>To increase the load we will be using busybox image, which continously access the application in a loop. In a new terminal,</p>
+<p>To increase the load we will be using the busybox image, which continuously accesses the application in a loop. In a new terminal,</p>
 <div class="highlight"><pre><span></span><code><span class="o">$</span><span class="w"> </span><span class="n">kubectl</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="o">-</span><span class="n">i</span><span class="w"> </span><span class="o">--</span><span class="n">tty</span><span class="w"> </span><span class="nb">load</span><span class="o">-</span><span class="n">generator</span><span class="w"> </span><span class="o">--</span><span class="n">rm</span><span class="w"> </span><span class="o">--</span><span class="n">image</span><span class="o">=</span><span class="n">busybox</span><span class="p">:</span><span class="mf">1.28</span><span class="w"> </span><span class="o">--</span><span class="n">restart</span><span class="o">=</span><span class="n">Never</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span><span class="w"> </span><span class="o">-</span><span class="n">c</span><span class="w"> </span><span class="s2">&quot;while sleep 0.01; do wget -q -O- http://php-apache; done&quot;</span>
 </code></pre></div>
 
-<p>In the other terminal, after a while, you can see target % is increased leading to autoscale out the deployment which affects the replicasets which in turn increases the number of pods to handle the load.</p>
+<p>In the other terminal, after a while, you can see the target % is increased leading to autoscale out the deployment which affects the replicasets which in turn increases the number of pods to handle the load.</p>
 <div class="highlight"><pre><span></span><code><span class="o">$</span><span class="w"> </span><span class="n">kubectl</span><span class="w"> </span><span class="n">get</span><span class="w"> </span><span class="n">all</span>
 <span class="n">NAME</span><span class="w">                              </span><span class="n">READY</span><span class="w">   </span><span class="n">STATUS</span><span class="w">    </span><span class="n">RESTARTS</span><span class="w">      </span><span class="n">AGE</span>
 <span class="n">pod</span><span class="o">/</span><span class="nb">load</span><span class="o">-</span><span class="n">generator</span><span class="w">                </span><span class="mi">1</span><span class="o">/</span><span class="mi">1</span><span class="w">     </span><span class="n">Running</span><span class="w">   </span><span class="mi">0</span><span class="w">             </span><span class="mi">105</span><span class="n">s</span>
@@ -224,7 +223,7 @@ php-apache<span class="w">   </span>Deployment/php-apache<span class="w">   </sp
 <span class="n">horizontalpodautoscaler</span><span class="o">.</span><span class="n">autoscaling</span><span class="o">/</span><span class="n">php</span><span class="o">-</span><span class="n">apache</span><span class="w">   </span><span class="n">Deployment</span><span class="o">/</span><span class="n">php</span><span class="o">-</span><span class="n">apache</span><span class="w">   </span><span class="mi">56</span><span class="o">%/</span><span class="mi">50</span><span class="o">%</span><span class="w">   </span><span class="mi">1</span><span class="w">         </span><span class="mi">10</span><span class="w">        </span><span class="mi">5</span><span class="w">          </span><span class="mi">70</span><span class="n">m</span>
 </code></pre></div>
 
-<p>Now stop the load to the application by Ctrl+C in the terminal where busybox was run. After few mins you can see the pods would have autoscaled down, decreasing the number of pods due to less or no traffic to the application.</p>
+<p>Now stop the load to the application by Ctrl+C in the terminal where busybox was run. After a few minutes, you can see the pods would have autoscaled down, decreasing the number of pods due to less or no traffic to the application.</p>
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>all
 NAME<span class="w">                              </span>READY<span class="w">   </span>STATUS<span class="w">    </span>RESTARTS<span class="w">      </span>AGE
 pod/php-apache-7495ff8f5b-gt8r8<span class="w">   </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">1</span><span class="w"> </span><span class="o">(</span>78m<span class="w"> </span>ago<span class="o">)</span><span class="w">   </span>4h7m
@@ -252,7 +251,7 @@ horizontalpodautoscaler.autoscaling/php-apache<span class="w">   </span>Deployme
 </code></pre></div>
 
 <ul>
-<li>Optionally remove the NodePort service if created</li>
+<li>Optionally remove the NodePort service, if created</li>
 </ul>
 <div class="highlight"><pre><span></span><code>kubectl delete svc php-apache-np
 </code></pre></div>
@@ -268,6 +267,12 @@ horizontalpodautoscaler.autoscaling/php-apache<span class="w">   </span>Deployme
 </ul>
 <div class="highlight"><pre><span></span><code>kubectl delete hpa php-apache
 </code></pre></div>
+
+<h2>References</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/">https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/</a></li>
+<li><a href="https://www.linuxtechi.com/how-to-install-kubernetes-metrics-server/">https://www.linuxtechi.com/how-to-install-kubernetes-metrics-server/</a></li>
+</ul>
     </div><!-- /.entry-content -->
 
   </article>

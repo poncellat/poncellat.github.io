@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>poncellat's Blog - Hephzibah Pon Cellat Arulprakash</title><link href="https://poncellat.github.io/" rel="alternate"></link><link href="https://poncellat.github.io/feeds/hephzibah-pon-cellat-arulprakash.atom.xml" rel="self"></link><id>https://poncellat.github.io/</id><updated>2023-09-08T11:33:00+04:00</updated><subtitle>coping data from brain to disk :D</subtitle><entry><title>Kubernetes | Autoscaling | Horizontal Pod Autoscaling</title><link href="https://poncellat.github.io/kubernetes-autoscaling-horizontal-pod-autoscaling.html" rel="alternate"></link><published>2023-09-08T11:33:00+04:00</published><updated>2023-09-08T11:33:00+04:00</updated><author><name>Hephzibah Pon Cellat Arulprakash</name></author><id>tag:poncellat.github.io,2023-09-08:/kubernetes-autoscaling-horizontal-pod-autoscaling.html</id><summary type="html">&lt;p&gt;This article discusses about Horizontal Pod Autoscaling (HPA), one of the type of autoscaling in kubernetes.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>poncellat's Blog - Hephzibah Pon Cellat Arulprakash</title><link href="https://poncellat.github.io/" rel="alternate"></link><link href="https://poncellat.github.io/feeds/hephzibah-pon-cellat-arulprakash.atom.xml" rel="self"></link><id>https://poncellat.github.io/</id><updated>2023-09-08T11:33:00+04:00</updated><subtitle>coping data from brain to disk :D</subtitle><entry><title>Kubernetes | Autoscaling | Horizontal Pod Autoscaling</title><link href="https://poncellat.github.io/kubernetes-autoscaling-horizontal-pod-autoscaling.html" rel="alternate"></link><published>2023-09-08T11:33:00+04:00</published><updated>2023-09-08T11:33:00+04:00</updated><author><name>Hephzibah Pon Cellat Arulprakash</name></author><id>tag:poncellat.github.io,2023-09-08:/kubernetes-autoscaling-horizontal-pod-autoscaling.html</id><summary type="html">&lt;p&gt;This article discusses Horizontal Pod Autoscaling (HPA), one of the types of autoscaling in Kubernetes.&lt;/p&gt;
 &lt;h2&gt;What is Horizontal Autoscaling&lt;/h2&gt;
-&lt;p&gt;Horizontal autoscaling is that based on the load in CPU and memory, you can scale up or down the number of pods automatically, so that your application can better serve …&lt;/p&gt;</summary><content type="html">&lt;p&gt;This article discusses about Horizontal Pod Autoscaling (HPA), one of the type of autoscaling in kubernetes.&lt;/p&gt;
+&lt;p&gt;Horizontal autoscaling is based on the load in CPU and memory, you can scale up or down the number of pods automatically so that your application can better serve during high …&lt;/p&gt;</summary><content type="html">&lt;p&gt;This article discusses Horizontal Pod Autoscaling (HPA), one of the types of autoscaling in Kubernetes.&lt;/p&gt;
 &lt;h2&gt;What is Horizontal Autoscaling&lt;/h2&gt;
-&lt;p&gt;Horizontal autoscaling is that based on the load in CPU and memory, you can scale up or down the number of pods automatically, so that your application can better serve during high or low traffic hours eventually customers can have seemless experience.&lt;/p&gt;
-&lt;p&gt;For this purpose you would configure the minimum and maximum number of pods to be created based on the metrics like CPU and memory.&lt;/p&gt;
-&lt;p&gt;There is a concept called vertical autoscaling where you add nodes to increase the infrastructure capacity in terms of CPU, RAM, storage etc.,&lt;/p&gt;
+&lt;p&gt;Horizontal autoscaling is based on the load in CPU and memory, you can scale up or down the number of pods automatically so that your application can better serve during high or low traffic hours eventually customers can have a seamless experience.&lt;/p&gt;
+&lt;p&gt;For this purpose, you would configure the minimum and maximum number of pods to be created based on metrics like CPU and memory.&lt;/p&gt;
+&lt;p&gt;There is a concept called vertical autoscaling where you add nodes to increase the infrastructure capacity in terms of CPU, RAM, storage, etc.,&lt;/p&gt;
 &lt;h2&gt;How in Kubernetes&lt;/h2&gt;
 &lt;h3&gt;Deploying sample application using Kubernetes Deployment and Service&lt;/h3&gt;
 &lt;p&gt;Consider below deployment and service definition yaml file &lt;code&gt;php-apache.yaml&lt;/code&gt;. &lt;/p&gt;
@@ -46,11 +46,11 @@
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;apache&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Assuming you already have a k8s cluster setup, to create deployment and service resource, &lt;/p&gt;
+&lt;p&gt;Assuming you already have a k8s cluster setup, to create deployment and service resources, &lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;kubectl&lt;span class="w"&gt; &lt;/span&gt;apply&lt;span class="w"&gt; &lt;/span&gt;-f&lt;span class="w"&gt; &lt;/span&gt;php-apache.yaml
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;This would create a deployment and service as below. From the deployment, replicaset is created and from replicaset, pod is created. so we have a service, deployment, replicaset and a pod.&lt;/p&gt;
+&lt;p&gt;This would create a deployment and service as below. From the deployment, the replicaset is created and from the replicaset, pods are created. so we have a service, deployment, replicaset, and pod.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;kubectl&lt;span class="w"&gt; &lt;/span&gt;get&lt;span class="w"&gt; &lt;/span&gt;all
 NAME&lt;span class="w"&gt;                              &lt;/span&gt;READY&lt;span class="w"&gt;   &lt;/span&gt;STATUS&lt;span class="w"&gt;    &lt;/span&gt;RESTARTS&lt;span class="w"&gt;   &lt;/span&gt;AGE
 pod/php-apache-7495ff8f5b-gt8r8&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;/1&lt;span class="w"&gt;     &lt;/span&gt;Running&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="w"&gt;          &lt;/span&gt;4m29s
@@ -65,9 +65,9 @@ NAME&lt;span class="w"&gt;                                    &lt;/span&gt;DESIR
 replicaset.apps/php-apache-7495ff8f5b&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="w"&gt;         &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="w"&gt;         &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="w"&gt;       &lt;/span&gt;4m29s
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;To check if the sample appilication is working, as this service is of type clusterIP, we can either expose the service as nodeport so that it is accessible from host machine, or we can ssh into the cluster and access via the cluster-ip. &lt;/p&gt;
+&lt;p&gt;To check if the sample application is working, as this service is of type Cluster-IP, we can either expose the service as NodePort so that it is accessible from the host machine, or we can ssh into the cluster and access via the Cluster-IP.&lt;/p&gt;
 &lt;h3&gt;Testing Application Method 1 (optional)&lt;/h3&gt;
-&lt;p&gt;Expose the service php-apache to a new service of type Nodeport so that it will accessible from your local machine and outside of kubernetes cluster. You can now access the app from local machine using the ip address of cluster followed the port exposed in NodePort.&lt;/p&gt;
+&lt;p&gt;Expose the service php-apache to a new service of type Nodeport so that it will be accessible from your local machine and outside of the Kubernetes cluster. You can now access the app from the local machine using the IP address of the cluster followed by the port exposed in NodePort.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;kubectl&lt;span class="w"&gt; &lt;/span&gt;expose&lt;span class="w"&gt; &lt;/span&gt;service&lt;span class="w"&gt; &lt;/span&gt;php-apache&lt;span class="w"&gt; &lt;/span&gt;--port&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;80&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;--target-port&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;80&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;--name&lt;span class="o"&gt;=&lt;/span&gt;php-apache-np&lt;span class="w"&gt; &lt;/span&gt;--type&lt;span class="o"&gt;=&lt;/span&gt;NodePort
 service/php-apache-np&lt;span class="w"&gt; &lt;/span&gt;exposed
 $&lt;span class="w"&gt; &lt;/span&gt;kubectl&lt;span class="w"&gt; &lt;/span&gt;get&lt;span class="w"&gt; &lt;/span&gt;svc
@@ -81,23 +81,23 @@ OK!
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h3&gt;Testing Application Method 2 (optional)&lt;/h3&gt;
-&lt;p&gt;To ssh into cluster and check the php application, below example assumes the cluster is created using minikube.&lt;/p&gt;
+&lt;p&gt;To SSH into the cluster and check the PHP application, the below example assumes the cluster is created using Minikube.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;minikube&lt;span class="w"&gt; &lt;/span&gt;ssh
 docker@minikube:~$
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;To check the application, use curl with app ip address. The app ip address can be found in cluster-ip from service. &lt;code&gt;kubectl get svc&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;To check the application, use curl with the app IP address. The app IP address can be found in Cluster-IP from the service by executing &lt;code&gt;kubectl get svc php-apache&lt;/code&gt;.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;minikube&lt;span class="w"&gt; &lt;/span&gt;ssh
 docker@minikube:~$&lt;span class="w"&gt; &lt;/span&gt;curl&lt;span class="w"&gt; &lt;/span&gt;http://10.100.126.40
 OK!
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h3&gt;Create Metrics Server&lt;/h3&gt;
-&lt;p&gt;Download the latest release of metrics server.&lt;/p&gt;
+&lt;p&gt;Download the latest release of the metrics server.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;curl&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;LO&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="n"&gt;github&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;kubernetes&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;sigs&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;metrics&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;server&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;releases&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;latest&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;download&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;components&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;yaml&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Edit the components.yaml in your favorite text editor, adding below lines&lt;/p&gt;
+&lt;p&gt;Add the lines &lt;code&gt;hostNetwork: true&lt;/code&gt; and &lt;code&gt;- --kubelet-insecure-tls&lt;/code&gt; in &lt;code&gt;components.yaml&lt;/code&gt;.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;  template:
     metadata:
       labels:
@@ -111,11 +111,11 @@ OK!
         - --secure-port=4443
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Apply the components.yaml&lt;/p&gt;
+&lt;p&gt;Apply the &lt;code&gt;components.yaml&lt;/code&gt;.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;kubectl apply -f components.yaml
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Check for the pods in namespace kube-system&lt;/p&gt;
+&lt;p&gt;Check for the pods in the namespace kube-system.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;kubectl&lt;span class="w"&gt; &lt;/span&gt;get&lt;span class="w"&gt; &lt;/span&gt;pod&lt;span class="w"&gt;  &lt;/span&gt;-n&lt;span class="w"&gt; &lt;/span&gt;kube-system
 NAME&lt;span class="w"&gt;                               &lt;/span&gt;READY&lt;span class="w"&gt;   &lt;/span&gt;STATUS&lt;span class="w"&gt;    &lt;/span&gt;RESTARTS&lt;span class="w"&gt;      &lt;/span&gt;AGE
 ...
@@ -123,9 +123,8 @@ metrics-server-77d9b56856-qjxh7&lt;span class="w"&gt;    &lt;/span&gt;&lt;span c
 ...
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Check if its installed properly by,&lt;/p&gt;
+&lt;p&gt;Check if it's installed properly by,&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;kubectl&lt;span class="w"&gt; &lt;/span&gt;top&lt;span class="w"&gt; &lt;/span&gt;nodes
-
 NAME&lt;span class="w"&gt;       &lt;/span&gt;CPU&lt;span class="o"&gt;(&lt;/span&gt;cores&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;CPU%&lt;span class="w"&gt;   &lt;/span&gt;MEMORY&lt;span class="o"&gt;(&lt;/span&gt;bytes&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;MEMORY%&lt;span class="w"&gt;   &lt;/span&gt;
 minikube&lt;span class="w"&gt;   &lt;/span&gt;389m&lt;span class="w"&gt;         &lt;/span&gt;&lt;span class="m"&gt;19&lt;/span&gt;%&lt;span class="w"&gt;    &lt;/span&gt;901Mi&lt;span class="w"&gt;           &lt;/span&gt;&lt;span class="m"&gt;11&lt;/span&gt;%&lt;span class="w"&gt;     &lt;/span&gt;
 
@@ -134,25 +133,25 @@ NAME&lt;span class="w"&gt;                          &lt;/span&gt;CPU&lt;span cla
 php-apache-7495ff8f5b-gt8r8&lt;span class="w"&gt;   &lt;/span&gt;1m&lt;span class="w"&gt;           &lt;/span&gt;31Mi&lt;span class="w"&gt;    &lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;If it is installed properly you will see the output about the CPU, memory metrics as shown above.&lt;/p&gt;
+&lt;p&gt;If it is installed properly you will see the output about the CPU, and memory metrics as shown above.&lt;/p&gt;
 &lt;h3&gt;Create the Horizontal Pod AutoScaler&lt;/h3&gt;
 &lt;p&gt;Create a Horizontal Pod Autoscaler which would autoscale if the CPU usage goes beyond 50% with the minimum and maximum number of pods to be autoscaled.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;kubectl&lt;span class="w"&gt; &lt;/span&gt;autoscale&lt;span class="w"&gt; &lt;/span&gt;deployment&lt;span class="w"&gt; &lt;/span&gt;php-apache&lt;span class="w"&gt; &lt;/span&gt;--cpu-percent&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;50&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;--min&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;--max&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;View the HPA resource&lt;/p&gt;
+&lt;p&gt;View the HPA resource,&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;kubectl&lt;span class="w"&gt; &lt;/span&gt;get&lt;span class="w"&gt; &lt;/span&gt;hpa
 NAME&lt;span class="w"&gt;         &lt;/span&gt;REFERENCE&lt;span class="w"&gt;               &lt;/span&gt;TARGETS&lt;span class="w"&gt;   &lt;/span&gt;MINPODS&lt;span class="w"&gt;   &lt;/span&gt;MAXPODS&lt;span class="w"&gt;   &lt;/span&gt;REPLICAS&lt;span class="w"&gt;   &lt;/span&gt;AGE
 php-apache&lt;span class="w"&gt;   &lt;/span&gt;Deployment/php-apache&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;%/50%&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="w"&gt;         &lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt;&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="w"&gt;          &lt;/span&gt;65m
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;As currently the application has no load, the target is 0%. HPA gets this information from the metrics server installed previously.&lt;/p&gt;
+&lt;p&gt;As currently, the application has no load, the target is 0%. HPA gets this information from the metrics server installed previously.&lt;/p&gt;
 &lt;h3&gt;Increase the Load&lt;/h3&gt;
-&lt;p&gt;To increase the load we will be using busybox image, which continously access the application in a loop. In a new terminal,&lt;/p&gt;
+&lt;p&gt;To increase the load we will be using the busybox image, which continuously accesses the application in a loop. In a new terminal,&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;kubectl&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;tty&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;load&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;generator&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;rm&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;image&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;busybox&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mf"&gt;1.28&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;restart&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;Never&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sh&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;while sleep 0.01; do wget -q -O- http://php-apache; done&amp;quot;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;In the other terminal, after a while, you can see target % is increased leading to autoscale out the deployment which affects the replicasets which in turn increases the number of pods to handle the load.&lt;/p&gt;
+&lt;p&gt;In the other terminal, after a while, you can see the target % is increased leading to autoscale out the deployment which affects the replicasets which in turn increases the number of pods to handle the load.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;kubectl&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;all&lt;/span&gt;
 &lt;span class="n"&gt;NAME&lt;/span&gt;&lt;span class="w"&gt;                              &lt;/span&gt;&lt;span class="n"&gt;READY&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="n"&gt;STATUS&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;RESTARTS&lt;/span&gt;&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;AGE&lt;/span&gt;
 &lt;span class="n"&gt;pod&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nb"&gt;load&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;generator&lt;/span&gt;&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="w"&gt;     &lt;/span&gt;&lt;span class="n"&gt;Running&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="w"&gt;             &lt;/span&gt;&lt;span class="mi"&gt;105&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;
@@ -178,7 +177,7 @@ php-apache&lt;span class="w"&gt;   &lt;/span&gt;Deployment/php-apache&lt;span cl
 &lt;span class="n"&gt;horizontalpodautoscaler&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;autoscaling&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;apache&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="n"&gt;Deployment&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;apache&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="mi"&gt;56&lt;/span&gt;&lt;span class="o"&gt;%/&lt;/span&gt;&lt;span class="mi"&gt;50&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="w"&gt;         &lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="mi"&gt;70&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Now stop the load to the application by Ctrl+C in the terminal where busybox was run. After few mins you can see the pods would have autoscaled down, decreasing the number of pods due to less or no traffic to the application.&lt;/p&gt;
+&lt;p&gt;Now stop the load to the application by Ctrl+C in the terminal where busybox was run. After a few minutes, you can see the pods would have autoscaled down, decreasing the number of pods due to less or no traffic to the application.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;kubectl&lt;span class="w"&gt; &lt;/span&gt;get&lt;span class="w"&gt; &lt;/span&gt;all
 NAME&lt;span class="w"&gt;                              &lt;/span&gt;READY&lt;span class="w"&gt;   &lt;/span&gt;STATUS&lt;span class="w"&gt;    &lt;/span&gt;RESTARTS&lt;span class="w"&gt;      &lt;/span&gt;AGE
 pod/php-apache-7495ff8f5b-gt8r8&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;/1&lt;span class="w"&gt;     &lt;/span&gt;Running&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;78m&lt;span class="w"&gt; &lt;/span&gt;ago&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;4h7m
@@ -206,7 +205,7 @@ horizontalpodautoscaler.autoscaling/php-apache&lt;span class="w"&gt;   &lt;/span
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Optionally remove the NodePort service if created&lt;/li&gt;
+&lt;li&gt;Optionally remove the NodePort service, if created&lt;/li&gt;
 &lt;/ul&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;kubectl delete svc php-apache-np
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -221,7 +220,13 @@ horizontalpodautoscaler.autoscaling/php-apache&lt;span class="w"&gt;   &lt;/span
 &lt;li&gt;Remove HPAs&lt;/li&gt;
 &lt;/ul&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;kubectl delete hpa php-apache
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="k8s"></category><category term="k8s"></category></entry><entry><title>Python Common Gotchas</title><link href="https://poncellat.github.io/python-common-gotchas.html" rel="alternate"></link><published>2022-09-04T09:31:00+04:00</published><updated>2022-09-04T09:31:00+04:00</updated><author><name>Hephzibah Pon Cellat Arulprakash</name></author><id>tag:poncellat.github.io,2022-09-04:/python-common-gotchas.html</id><summary type="html">&lt;p&gt;This article discusses about common gotchas in python with code snippets describing what someone might think it would work like but how it actually works behind the scenes.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/"&gt;https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.linuxtechi.com/how-to-install-kubernetes-metrics-server/"&gt;https://www.linuxtechi.com/how-to-install-kubernetes-metrics-server/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><category term="k8s"></category><category term="k8s"></category></entry><entry><title>Python Common Gotchas</title><link href="https://poncellat.github.io/python-common-gotchas.html" rel="alternate"></link><published>2022-09-04T09:31:00+04:00</published><updated>2022-09-04T09:31:00+04:00</updated><author><name>Hephzibah Pon Cellat Arulprakash</name></author><id>tag:poncellat.github.io,2022-09-04:/python-common-gotchas.html</id><summary type="html">&lt;p&gt;This article discusses about common gotchas in python with code snippets describing what someone might think it would work like but how it actually works behind the scenes.&lt;/p&gt;
 &lt;h2&gt;Table of Contents&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Mutable Default Arguments&lt;/li&gt;

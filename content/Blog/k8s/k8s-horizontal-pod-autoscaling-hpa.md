@@ -5,15 +5,15 @@ Tags: k8s
 Keywords: k8s, autoscaling, kubernetes
 Authors: Hephzibah Pon Cellat Arulprakash
 
-This article discusses about Horizontal Pod Autoscaling (HPA), one of the type of autoscaling in kubernetes.
+This article discusses Horizontal Pod Autoscaling (HPA), one of the types of autoscaling in Kubernetes.
 
 ## What is Horizontal Autoscaling
 
-Horizontal autoscaling is that based on the load in CPU and memory, you can scale up or down the number of pods automatically, so that your application can better serve during high or low traffic hours eventually customers can have seemless experience.
+Horizontal autoscaling is based on the load in CPU and memory, you can scale up or down the number of pods automatically so that your application can better serve during high or low traffic hours eventually customers can have a seamless experience.
 
-For this purpose you would configure the minimum and maximum number of pods to be created based on the metrics like CPU and memory.
+For this purpose, you would configure the minimum and maximum number of pods to be created based on metrics like CPU and memory.
 
-There is a concept called vertical autoscaling where you add nodes to increase the infrastructure capacity in terms of CPU, RAM, storage etc.,
+There is a concept called vertical autoscaling where you add nodes to increase the infrastructure capacity in terms of CPU, RAM, storage, etc.,
 
 ## How in Kubernetes
 
@@ -59,13 +59,13 @@ spec:
     run: php-apache
 ```
 
-Assuming you already have a k8s cluster setup, to create deployment and service resource, 
+Assuming you already have a k8s cluster setup, to create deployment and service resources, 
 
 ```
 $ kubectl apply -f php-apache.yaml
 ```
 
-This would create a deployment and service as below. From the deployment, replicaset is created and from replicaset, pod is created. so we have a service, deployment, replicaset and a pod.
+This would create a deployment and service as below. From the deployment, the replicaset is created and from the replicaset, pods are created. so we have a service, deployment, replicaset, and pod.
 
 ```
 $ kubectl get all
@@ -82,11 +82,11 @@ NAME                                    DESIRED   CURRENT   READY   AGE
 replicaset.apps/php-apache-7495ff8f5b   1         1         1       4m29s
 ```
 
-To check if the sample appilication is working, as this service is of type clusterIP, we can either expose the service as nodeport so that it is accessible from host machine, or we can ssh into the cluster and access via the cluster-ip. 
+To check if the sample application is working, as this service is of type Cluster-IP, we can either expose the service as NodePort so that it is accessible from the host machine, or we can ssh into the cluster and access via the Cluster-IP.
 
 ### Testing Application Method 1 (optional)
 
-Expose the service php-apache to a new service of type Nodeport so that it will accessible from your local machine and outside of kubernetes cluster. You can now access the app from local machine using the ip address of cluster followed the port exposed in NodePort.
+Expose the service php-apache to a new service of type Nodeport so that it will be accessible from your local machine and outside of the Kubernetes cluster. You can now access the app from the local machine using the IP address of the cluster followed by the port exposed in NodePort.
 
 ```
 $ kubectl expose service php-apache --port=80 --target-port=80 --name=php-apache-np --type=NodePort
@@ -103,14 +103,14 @@ OK!
 
 ### Testing Application Method 2 (optional)
 
-To ssh into cluster and check the php application, below example assumes the cluster is created using minikube.
+To SSH into the cluster and check the PHP application, the below example assumes the cluster is created using Minikube.
 
 ```
 $ minikube ssh
 docker@minikube:~$
 ```
 
-To check the application, use curl with app ip address. The app ip address can be found in cluster-ip from service. `kubectl get svc`
+To check the application, use curl with the app IP address. The app IP address can be found in Cluster-IP from the service by executing `kubectl get svc php-apache`.
 
 ```
 $ minikube ssh
@@ -120,13 +120,13 @@ OK!
 
 ### Create Metrics Server
 
-Download the latest release of metrics server.
+Download the latest release of the metrics server.
 
 ```
 curl -LO https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 ```
 
-Edit the components.yaml in your favorite text editor, adding below lines
+Add the lines `hostNetwork: true` and `- --kubelet-insecure-tls` in `components.yaml`.
 
 ```
   template:
@@ -142,13 +142,13 @@ Edit the components.yaml in your favorite text editor, adding below lines
         - --secure-port=4443
 ```
 
-Apply the components.yaml
+Apply the `components.yaml`.
 
 ```
 kubectl apply -f components.yaml
 ```
 
-Check for the pods in namespace kube-system
+Check for the pods in the namespace kube-system.
 
 ```
 $ kubectl get pod  -n kube-system
@@ -158,11 +158,10 @@ metrics-server-77d9b56856-qjxh7    1/1     Running   0             3m32s
 ...
 ```
 
-Check if its installed properly by,
+Check if it's installed properly by,
 
 ```
 $ kubectl top nodes
-
 NAME       CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%   
 minikube   389m         19%    901Mi           11%     
 
@@ -171,7 +170,7 @@ NAME                          CPU(cores)   MEMORY(bytes)
 php-apache-7495ff8f5b-gt8r8   1m           31Mi    
 ```
 
-If it is installed properly you will see the output about the CPU, memory metrics as shown above.
+If it is installed properly you will see the output about the CPU, and memory metrics as shown above.
 
 ### Create the Horizontal Pod AutoScaler
 
@@ -181,7 +180,7 @@ Create a Horizontal Pod Autoscaler which would autoscale if the CPU usage goes b
 $ kubectl autoscale deployment php-apache --cpu-percent=50 --min=1 --max=10
 ```
 
-View the HPA resource
+View the HPA resource,
 
 ```
 $ kubectl get hpa
@@ -189,16 +188,17 @@ NAME         REFERENCE               TARGETS   MINPODS   MAXPODS   REPLICAS   AG
 php-apache   Deployment/php-apache   0%/50%    1         10        1          65m
 ```
 
-As currently the application has no load, the target is 0%. HPA gets this information from the metrics server installed previously.
+As currently, the application has no load, the target is 0%. HPA gets this information from the metrics server installed previously.
 
 ### Increase the Load
 
-To increase the load we will be using busybox image, which continously access the application in a loop. In a new terminal,
+To increase the load we will be using the busybox image, which continuously accesses the application in a loop. In a new terminal,
+
 ```
 $ kubectl run -i --tty load-generator --rm --image=busybox:1.28 --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://php-apache; done"
 ```
 
-In the other terminal, after a while, you can see target % is increased leading to autoscale out the deployment which affects the replicasets which in turn increases the number of pods to handle the load.
+In the other terminal, after a while, you can see the target % is increased leading to autoscale out the deployment which affects the replicasets which in turn increases the number of pods to handle the load.
 
 ```
 $ kubectl get all
@@ -226,7 +226,7 @@ NAME                                             REFERENCE               TARGETS
 horizontalpodautoscaler.autoscaling/php-apache   Deployment/php-apache   56%/50%   1         10        5          70m
 ```
 
-Now stop the load to the application by Ctrl+C in the terminal where busybox was run. After few mins you can see the pods would have autoscaled down, decreasing the number of pods due to less or no traffic to the application.
+Now stop the load to the application by Ctrl+C in the terminal where busybox was run. After a few minutes, you can see the pods would have autoscaled down, decreasing the number of pods due to less or no traffic to the application.
 
 ```
 $ kubectl get all
@@ -255,7 +255,7 @@ horizontalpodautoscaler.autoscaling/php-apache   Deployment/php-apache   0%/50% 
 kubectl delete -f php-apache.yaml
 ```
 
-- Optionally remove the NodePort service if created
+- Optionally remove the NodePort service, if created
 
 ```
 kubectl delete svc php-apache-np
@@ -272,3 +272,8 @@ kubectl delete -f components.yaml
 ```
 kubectl delete hpa php-apache
 ```
+
+## References
+
+- [https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/)
+- [https://www.linuxtechi.com/how-to-install-kubernetes-metrics-server/](https://www.linuxtechi.com/how-to-install-kubernetes-metrics-server/)
